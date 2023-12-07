@@ -1,1 +1,11 @@
-@use './assets/sass/base';
+// Base
+@use './assets/sass/base/_reset';
+@use './assets/sass/base/_footer';
+@use './assets/sass/base/_header';
+
+// Views
+@use './assets/sass/views/_homePag';
+
+// Utilities
+@use './assets/sass/utilities/_mixins';
+@use './assets/sass/utilities/_variables';
