@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom"
 
 import HomePag from './components/HomePag'
 import Pag404 from './components/Pag404'
+import Wiki from './components/Wiki'
 
 // Con <Link to="/">Home</Link> importado desde "react-router-dom"
 // haria que sea SPA(single page application) porque no recargaría la página
@@ -27,6 +28,9 @@ function App() {
       <Routes>
         <Route path='/' element={ <HomePag /> } />
         <Route path='/contacto' element={ <Pag404 /> } />
+        <Route path='/wiki' element={ <Wiki /> } >
+          <Route path='/wiki/:fact' />
+        </Route>
       </Routes>
       <footer>
         <h1>I am the footer</h1>
