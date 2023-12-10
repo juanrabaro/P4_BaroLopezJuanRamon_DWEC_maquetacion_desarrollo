@@ -1,23 +1,36 @@
 import React from "react"
 import { useState, useEffect } from "react"
-import useFetch from "./useFetch"
 
 function HomePag() {
+  console.log("principio componente");
+  const [isMounted, setIsMounted] = useState(false);
   
   const [clicked, setClicked] = useState(false)
+  var [count, setCount] = useState(0)
   
   const [fetchData, setFetchData] = useState({}) 
   const fact = fetchData.fact
   
   
   function handleClick() {
-    setClicked(false)
     setClicked(true)
+    setCount(++count)
   }
-
+  
+  
   useEffect(() => {
-    console.log("hello");
-  }, [clicked])
+    console.log("montando");
+    setIsMounted(true);
+    console.log("montado?");
+    if (isMounted) {
+      console.log('Effect ejecutado después del montaje inicial');
+      fetch("https://catfact.ninja/fact?")
+        .then((response) => response.json())
+        .then((data) => setFetchData(data))
+        .finally(() => console.log("fetch terminado"))
+    }
+  }, [count])
+
   
   return (
     <main className="main-home">
