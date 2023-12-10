@@ -2,7 +2,6 @@ import React from "react"
 import { useState, useEffect } from "react"
 
 function HomePag() {
-  console.log("principio componente");
   const [isMounted, setIsMounted] = useState(false);
   
   const [clicked, setClicked] = useState(false)
@@ -11,23 +10,22 @@ function HomePag() {
   const [fetchData, setFetchData] = useState({}) 
   const fact = fetchData.fact
   
+  const [loading, setLoading] = useState(false)
   
   function handleClick() {
+    setLoading(true)
     setClicked(true)
     setCount(++count)
   }
   
   
   useEffect(() => {
-    console.log("montando");
-    setIsMounted(true);
-    console.log("montado?");
+    setIsMounted(true)
     if (isMounted) {
-      console.log('Effect ejecutado después del montaje inicial');
       fetch("https://catfact.ninja/fact?")
         .then((response) => response.json())
         .then((data) => setFetchData(data))
-        .finally(() => console.log("fetch terminado"))
+        .finally(() => setLoading(false))
     }
   }, [count])
 
@@ -38,6 +36,9 @@ function HomePag() {
         <button onClick={ handleClick } className="tituloHome">GENERAR CAT FACT</button>
         <img className="imgPrincipal" src="/src/assets/images/imagenPrincipal.png" alt="imagenPrincipal" />
       </section>
+      {
+        loading && <p>Loading..</p>
+      }
       {
         clicked && <p>{ fact }</p>
       }
