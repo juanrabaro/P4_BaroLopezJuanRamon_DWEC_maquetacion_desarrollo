@@ -3,7 +3,7 @@ import useFetch from "./useFetch"
 
 function Wiki() {
 
-  const { fetchData, loading } = useFetch("https://catfact.ninja/facts?limit=3")
+  const { fetchData, loading } = useFetch("https://catfact.ninja/facts?limit=332")
   const data = fetchData.data
 
   return(
@@ -15,7 +15,9 @@ function Wiki() {
         }
         {
           data?.map((factObject) => {
-            return <li key={ data.indexOf(factObject) }>{ factObject.fact }</li>
+            return (
+              <li key={ data.indexOf(factObject) }>- { factObject.fact }</li>
+            )
           })
         }
         {/*
