@@ -9,24 +9,25 @@ const NavBar = () => {
   const navigate = useNavigate()
 
   function logout() {
+    localStorage.setItem("userLogged", false)
     setUser(false)
     navigate("/")
   }
-  function login() {
+  /*function login() {
     setUser(true)
     navigate("/dashboard")
-  }
+  }*/
 
   return (
     <nav>
       <Link to="/">Home</Link>
       {
-        user ? (
+        user && (
           <>
             <Link to="/dashboard">Dashboard</Link>
             <button onClick={ logout }>Logout</button>
           </>
-        ) : (<button onClick={ login }>Login</button>)
+        )
       }
     </nav>
   )

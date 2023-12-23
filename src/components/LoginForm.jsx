@@ -38,6 +38,7 @@ const LoginForm = () => {
     })
 
     // usuario logeado activa layouts privados
+    localStorage.setItem("userLogged", true)
     setUser(true)
   }
 
