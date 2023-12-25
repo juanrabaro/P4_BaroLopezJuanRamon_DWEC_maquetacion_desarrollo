@@ -1,6 +1,10 @@
 import { createBrowserRouter } from "react-router-dom"
 import Home from "../pages/Home"
-import Dashboard from "../pages/Dashboard"
+import Profile from "../pages/Profile"
+import WikiFacts from "../pages/WikiFacts"
+import WikiBreeds from "../pages/WikiBreeds"
+import SignInPage from "../pages/SignInPage"
+import LogInPage from "../pages/LogInPage"
 import LayoutPrivate from "../layouts/LayoutPrivate"
 import LayoutRoot from "../layouts/LayoutRoot"
 
@@ -10,16 +14,32 @@ export const router = createBrowserRouter([
     element: <LayoutRoot />,
     children: [
       {
-        index: true,
+        path: "/",
         element: <Home />,
       },
       {
-        path:"/dashboard",
+        path: "/facts",
+        element: <WikiFacts />,
+      },
+      {
+        path: "/breeds",
+        element: <WikiBreeds />,
+      },
+      {
+        path: "/signin",
+        element: <SignInPage />,
+      },
+      {
+        path: "/login",
+        element: <LogInPage />,
+      },
+      {
+        path:"/profile",
         element: <LayoutPrivate />,
         children: [
           {
             index: true,
-            element: <Dashboard />,
+            element: <Profile />,
           },
         ]
       },

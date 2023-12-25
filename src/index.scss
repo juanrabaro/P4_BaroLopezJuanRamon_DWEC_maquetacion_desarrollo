@@ -1,3 +1,6 @@
-body {
-  background-color: rgb(136, 136, 136);
-}
+@import "./assets/scss/reset.scss";
+@import "./assets/scss/header.scss";
+@import "./assets/scss/main.scss";
+@import "./assets/scss/footer.scss";
+@import "./assets/scss/wikiFacts.scss";
+@import "./assets/scss/wikiBreeds.scss";

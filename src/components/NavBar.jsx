@@ -19,17 +19,23 @@ const NavBar = () => {
   }*/
 
   return (
-    <nav>
-      <Link to="/">Home</Link>
-      {
-        user && (
-          <>
-            <Link to="/dashboard">Dashboard</Link>
-            <button onClick={ logout }>Logout</button>
-          </>
-        )
-      }
-    </nav>
+    <header>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/facts">Wiki Facts</Link>
+        <Link to="/breeds">Wiki Breeds</Link>
+        <Link to="/signin">Sign In</Link>
+        <Link to="/login">Log in</Link>
+        {
+          user && (
+            <>
+              <Link to="/profile">Profile</Link>
+              <button onClick={ logout }>Logout</button>
+            </>
+          )
+        }
+      </nav>
+    </header>
   )
 }
 
