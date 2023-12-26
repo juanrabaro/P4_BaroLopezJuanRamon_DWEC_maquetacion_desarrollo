@@ -24,6 +24,7 @@ const NavBar = () => {
         <Link to="/">Home</Link>
         <Link to="/facts">Wiki Facts</Link>
         <Link to="/breeds">Wiki Breeds</Link>
+        <Link to="/favourites">Favourites</Link>
         <Link to="/signin">Sign In</Link>
         <Link to="/login">Log in</Link>
         {

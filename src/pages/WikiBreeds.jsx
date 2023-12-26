@@ -5,6 +5,7 @@ const WikiBreeds = () => {
   const [breedsList, setBreedsList] = useState([])
   const [fav, setFav] = useState(false)
   var [pagCount, setPagCount] = useState(1)
+  const [loading, setLoading] = useState(true)
 
 
   useEffect(() => {
@@ -12,6 +13,7 @@ const WikiBreeds = () => {
     fetch(url)
       .then(res => res.json())
       .then(data => setBreedsList(data.data))
+    setLoading(false)
   }, [])
   
 
@@ -30,7 +32,7 @@ const WikiBreeds = () => {
     pagCount > 1 && setPagCount(--pagCount)
   }
   function nextPag() {
-    pagCount < 17 && setPagCount(++pagCount)
+    pagCount < 5 && setPagCount(++pagCount)
   }
   
 
@@ -46,7 +48,10 @@ const WikiBreeds = () => {
       <h1>WikiBreeds</h1>
       <section className='section-breeds'>
         {
-          breedsList?.map((item, index) => {
+          loading && <p>Loading...</p>
+        }
+        {
+          breedsList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
             return (
             <div key={ index }>
               <p>

@@ -5,6 +5,7 @@ const WikiFacts = () => {
   const [factsList, setFactsList] = useState([])
   const [fav, setFav] = useState(false)
   var [pagCount, setPagCount] = useState(1)
+  const [loading, setLoading] = useState(true)
 
 
   useEffect(() => {
@@ -12,6 +13,7 @@ const WikiFacts = () => {
     fetch(url)
       .then(res => res.json())
       .then(data => setFactsList(data.data))
+    setLoading(false)
   }, [])
   
 
@@ -34,11 +36,6 @@ const WikiFacts = () => {
   }
   
 
-  useEffect(() => {
-    
-
-  }, [pagCount])
-  
 
 
   return (
@@ -46,7 +43,10 @@ const WikiFacts = () => {
       <h1>WikiFacts</h1>
       <section className='section-facts'>
         {
-          factsList?.map((item, index) => {
+          loading && <p>Loading...</p>
+        }
+        {
+          factsList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
             return (
             <div key={ index }>
               <p>

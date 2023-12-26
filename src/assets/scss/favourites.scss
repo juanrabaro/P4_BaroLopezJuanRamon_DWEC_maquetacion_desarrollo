@@ -1,0 +1,22 @@
+.h1-favourites {
+  text-align: center;
+}
+
+.section-buttons-favourites {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+
+  button {
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 7px;
+    font-size: larger;
+    width: 150px;
+  }
+}
+
+.section-favourites {
+  
+}

@@ -3,6 +3,7 @@ import Home from "../pages/Home"
 import Profile from "../pages/Profile"
 import WikiFacts from "../pages/WikiFacts"
 import WikiBreeds from "../pages/WikiBreeds"
+import Favourites from "../pages/Favourites"
 import SignInPage from "../pages/SignInPage"
 import LogInPage from "../pages/LogInPage"
 import LayoutPrivate from "../layouts/LayoutPrivate"
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: "/breeds",
         element: <WikiBreeds />,
+      },
+      {
+        path: "/favourites",
+        element: <Favourites />,
       },
       {
         path: "/signin",
