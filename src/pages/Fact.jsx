@@ -13,7 +13,6 @@ const Fact = () => {
 export default Fact
 
 export async function loaderFact({ params }) {
-  console.log(params.index)
   const res = await fetch(`https://catfact.ninja/facts?limit=${params.index}`)
   const data = await res.json()
   const fact = await data.data[params.index-1]
