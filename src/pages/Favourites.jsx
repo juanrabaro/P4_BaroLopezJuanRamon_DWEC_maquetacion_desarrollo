@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { bringFavs } from '../assets/localStorage'
 
 const Favourites = () => {
 
@@ -8,8 +9,8 @@ const Favourites = () => {
 
   // Cargar aqui⬇️ los estados⬆️
   useEffect(() => {
-    setBreedsFav()
-    setFactsFav()
+    //setBreedsFav()
+    setFactsFav(bringFavs())
   }, [])
   
 
@@ -36,7 +37,46 @@ const Favourites = () => {
       </section>
       <section className='section-favourites'>
         {
-          factOrBreed === "fact" ? <h2>Facts favoritos</h2> : <h2>Breeds favoritos</h2>
+          factOrBreed === "fact" ? (
+            <>
+              <h2>Facts favoritos</h2>
+              {
+                !factsFav.length ? <p>No hay facts guardados en favoritos</p> :
+                factsFav?.map((item, index) => {
+                  return <p key={ index }>{ item.fact }</p>
+                })
+              }
+            </>
+          )
+          : (
+            <>
+              <h2>Breeds favoritos</h2>
+              {
+                !breedsFav.length ? <p>No hay breeds guardados en favoritos</p> :
+                breedsFav?.map((item, index) => {
+                  return (
+                    <div key={ index }>
+                      <p>
+                        Breed - { item.breed }
+                      </p>
+                      <p>
+                        Country - { item.country }
+                      </p>
+                      <p>
+                        Origin - { item.origin }
+                      </p>
+                      <p>
+                        Coat - { item.coat }
+                      </p>
+                      <p>
+                        Pattern - { item.pattern }
+                      </p>
+                    </div>
+                  )
+                })
+              }
+            </>
+          )
         }
       </section>
     </>
