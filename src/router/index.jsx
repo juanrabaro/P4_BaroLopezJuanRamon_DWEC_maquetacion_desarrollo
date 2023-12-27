@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom"
 import Home from "../pages/Home"
 import Profile from "../pages/Profile"
-import WikiFacts from "../pages/WikiFacts"
+import WikiFacts, { loaderFacts } from "../pages/WikiFacts"
+import Fact, { loaderFact } from "../pages/Fact"
 import WikiBreeds from "../pages/WikiBreeds"
 import Favourites from "../pages/Favourites"
 import SignInPage from "../pages/SignInPage"
@@ -21,6 +22,12 @@ export const router = createBrowserRouter([
       {
         path: "/facts",
         element: <WikiFacts />,
+        loader: loaderFacts,
+      },
+      {
+        path: "/facts/:index",
+        element: <Fact />,
+        loader: loaderFact,
       },
       {
         path: "/breeds",

@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { Link, useLoaderData } from 'react-router-dom'
 
 const WikiFacts = () => {
+
+  const { facts } = useLoaderData()
   
-  const [factsList, setFactsList] = useState([])
+  const [factsList, setFactsList] = useState(facts.data)
   const [fav, setFav] = useState(false)
   var [pagCount, setPagCount] = useState(1)
-  const [loading, setLoading] = useState(true)
+  //const [loading, setLoading] = useState(true)
+  
 
+  
 
-  useEffect(() => {
+  /*useEffect(() => {
     const url = "https://catfact.ninja/facts?limit=332"
     fetch(url)
       .then(res => res.json())
       .then(data => setFactsList(data.data))
     setLoading(false)
-  }, [])
+  }, [])*/
   
 
   // Añadir a favoritos no implementado
@@ -42,9 +47,9 @@ const WikiFacts = () => {
     <>
       <h1>WikiFacts</h1>
       <section className='section-facts'>
-        {
+        {/*
           loading && <p>Loading...</p>
-        }
+      */}
         {
           factsList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
             return (
@@ -53,8 +58,9 @@ const WikiFacts = () => {
                 { item.fact }
               </p>
               {
-                fav ? <button id='added' onClick={ handleClick }>Añadido a favoritos🌟</button> : <button id='add' onClick={ handleClick }>Añadir a favoritos⭐</button>
+                fav ? <button onClick={ handleClick }>Añadido a favoritos🌟</button> : <button onClick={ handleClick }>Añadir a favoritos⭐</button>
               }
+              <Link to={`/facts/${(index+1)+((pagCount-1)*20)}`}>View Fact</Link>
             </div>
             )
           })
@@ -70,3 +76,9 @@ const WikiFacts = () => {
 }
 
 export default WikiFacts
+
+export const loaderFacts = async() => {
+  const res = await fetch("https://catfact.ninja/facts?limit=332")
+  const facts = await res.json()
+  return { facts }
+}
