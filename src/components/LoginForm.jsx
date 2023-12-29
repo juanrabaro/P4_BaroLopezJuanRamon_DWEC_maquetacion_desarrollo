@@ -12,9 +12,6 @@ const LoginForm = () => {
 
   // llenar lista usuarios con datos del localStorage
   useEffect(() => {
-    // PROVISIONAL borrar localStorage
-    //localStorage.removeItem("users")
-    
     setListUsers(bringUsers())
   }, [])
   
