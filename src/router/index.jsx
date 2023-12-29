@@ -3,12 +3,13 @@ import Home from "../pages/Home"
 import Profile from "../pages/Profile"
 import WikiFacts, { loaderFacts } from "../pages/WikiFacts"
 import Fact, { loaderFact } from "../pages/Fact"
-import WikiBreeds from "../pages/WikiBreeds"
+import WikiBreeds, { loaderBreeds } from "../pages/WikiBreeds"
 import Favourites from "../pages/Favourites"
 import SignInPage from "../pages/SignInPage"
 import LogInPage from "../pages/LogInPage"
 import LayoutPrivate from "../layouts/LayoutPrivate"
 import LayoutRoot from "../layouts/LayoutRoot"
+import Breed, { loaderBreed } from "../pages/Breed"
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,12 @@ export const router = createBrowserRouter([
       {
         path: "/breeds",
         element: <WikiBreeds />,
+        loader: loaderBreeds,
+      },
+      {
+        path: "/breeds/:index",
+        element: <Breed />,
+        loader: loaderBreed,
       },
       {
         path: "/favourites",

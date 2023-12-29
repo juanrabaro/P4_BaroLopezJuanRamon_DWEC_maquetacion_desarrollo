@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const WikiBreeds = () => {
 
@@ -72,6 +73,7 @@ const WikiBreeds = () => {
               {
                 fav ? <button id='added' onClick={ handleClick }>Añadido a favoritos🌟</button> : <button id='add' onClick={ handleClick }>Añadir a favoritos⭐</button>
               }
+              <Link to={`/breeds/${(index+1)+((pagCount-1)*20)}`}>View Fact</Link>
             </div>
             )
           })
@@ -88,3 +90,9 @@ const WikiBreeds = () => {
 
 
 export default WikiBreeds
+
+export const loaderBreeds = async() => {
+  const res = await fetch("https://catfact.ninja/breeds?limit=98")
+  const breeds = await res.json()
+  return { breeds }
+}
