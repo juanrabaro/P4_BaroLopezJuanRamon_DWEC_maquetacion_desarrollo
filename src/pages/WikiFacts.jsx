@@ -7,7 +7,6 @@ const WikiFacts = () => {
   const { facts } = useLoaderData()
   
   const [factsList, setFactsList] = useState(facts.data)
-  const [fav, setFav] = useState(true)
   var [pagCount, setPagCount] = useState(1)
   const [listFavs, setListFavs] = useState([])
   const [loading, setLoading] = useState(true)
@@ -23,7 +22,7 @@ const WikiFacts = () => {
     
     const newFav = newListFav[0]
     setListFavs([...listFavs, newFav])
-    uploadFav([...listFavs, newFav])
+    uploadFav([...listFavs, newFav], "factsFavs")
   }
 
   function deleteFavourite(objeto) {
@@ -31,7 +30,7 @@ const WikiFacts = () => {
       return JSON.stringify(item) !== JSON.stringify(objeto)
     })    
     setListFavs(newListFav)
-    uploadFav(newListFav)
+    uploadFav(newListFav, "factsFavs")
   }
 
 
@@ -45,7 +44,7 @@ const WikiFacts = () => {
 
   useEffect(() => {
     setLoading(false)
-    setListFavs(bringFavs())
+    setListFavs(bringFavs("factsFavs"))
   }, [])
 
 

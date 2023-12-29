@@ -9,8 +9,8 @@ const Favourites = () => {
 
   // Cargar aqui⬇️ los estados⬆️
   useEffect(() => {
-    //setBreedsFav()
-    setFactsFav(bringFavs())
+    setBreedsFav(bringFavs("breedsFavs"))
+    setFactsFav(bringFavs("factsFavs"))
   }, [])
   
 

@@ -9,10 +9,10 @@ export function bringUsers() {
 
 
 
-export function uploadFav(newFav) {
-  localStorage.setItem("favs", JSON.stringify(newFav))
+export function uploadFav(newFav, factOrBreed) {
+  localStorage.setItem(factOrBreed, JSON.stringify(newFav))
 }
 
-export function bringFavs() {
-  return JSON.parse(localStorage.getItem("favs")) || []
+export function bringFavs(factOrBreed) {
+  return JSON.parse(localStorage.getItem(factOrBreed)) || []
 }

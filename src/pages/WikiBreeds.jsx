@@ -1,32 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
+import { bringFavs, uploadFav } from '../assets/localStorage'
 
 const WikiBreeds = () => {
 
-  const [breedsList, setBreedsList] = useState([])
-  const [fav, setFav] = useState(false)
+  const { breeds } = useLoaderData()
+  
+  const [breedsList, setBreedsList] = useState(breeds.data)
+  const [listFavs, setListFavs] = useState([])
   var [pagCount, setPagCount] = useState(1)
   const [loading, setLoading] = useState(true)
 
 
   useEffect(() => {
-    const url = "https://catfact.ninja/breeds?limit=98"
-    fetch(url)
-      .then(res => res.json())
-      .then(data => setBreedsList(data.data))
     setLoading(false)
+    setListFavs(bringFavs("breedsFavs"))
   }, [])
-  
-
-  // Añadir a favoritos no implementado
-  function handleClick(e) {
-    const { textContent } = e.target
-    console.log(textContent)
-    textContent === "Añadir a favoritos⭐" ? 
-    setFav(true)
-    :
-    setFav(false)
-  }
 
 
   function prevPag() {
@@ -37,11 +26,30 @@ const WikiBreeds = () => {
   }
   
 
-  useEffect(() => {
+  // Añadir a favoritos
+  function addFavourite(index) {
+    const newBreedList = breedsList.filter((breed) => {
+      return breed === breedsList[index+((pagCount-1)*20)]
+    })
     
+    const newFav = newBreedList[0]
+    setListFavs([...listFavs, newFav])
+    uploadFav([...listFavs, newFav], "breedsFavs")
+  }
 
-  }, [pagCount])
+  function deleteFavourite(objeto) {
+    const newBreedList = breedsList.filter((item) => {
+      return JSON.stringify(item) !== JSON.stringify(objeto)
+    })    
+    setListFavs(newBreedList)
+    uploadFav(newBreedList, "breedsFavs")
+  }
   
+
+  // Renderizar solo cuando la carga ha terminado
+  if (loading) {
+    return <p>Loading...</p>
+  }
 
 
   return (
@@ -71,9 +79,9 @@ const WikiBreeds = () => {
                 Pattern - { item.pattern }
               </p>
               {
-                fav ? <button id='added' onClick={ handleClick }>Añadido a favoritos🌟</button> : <button id='add' onClick={ handleClick }>Añadir a favoritos⭐</button>
+                listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) ? <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> : <button onClick={ () => addFavourite(index) }>Añadir a favoritos⭐</button>
               }
-              <Link to={`/breeds/${(index+1)+((pagCount-1)*20)}`}>View Fact</Link>
+              <Link to={`/breeds/${(index+1)+((pagCount-1)*20)}`}>View Breed</Link>
             </div>
             )
           })
