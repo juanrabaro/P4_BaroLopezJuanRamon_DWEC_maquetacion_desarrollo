@@ -79,7 +79,7 @@ const WikiFacts = () => {
   return (
     <>
       <h1>WikiFacts</h1>
-      <input type="text" onChange={ handleFilter } />
+      <input type="text" onChange={ handleFilter } placeholder='Find by keywords' />
       <section className='section-facts'>
         {
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
