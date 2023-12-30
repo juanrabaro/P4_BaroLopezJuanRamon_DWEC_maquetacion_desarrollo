@@ -10,6 +10,8 @@ const WikiFacts = () => {
   var [pagCount, setPagCount] = useState(1)
   const [listFavs, setListFavs] = useState([])
   const [loading, setLoading] = useState(true)
+  const [filter, setFilter] = useState("")
+  const [filteredList, setFilteredList] = useState(factsList)
   
 
 
@@ -38,7 +40,7 @@ const WikiFacts = () => {
     pagCount > 1 && setPagCount(--pagCount)
   }
   function nextPag() {
-    pagCount < 17 && setPagCount(++pagCount)
+    pagCount < Math.ceil(filteredList.length/20) && setPagCount(++pagCount)
   }
   
 
@@ -46,6 +48,15 @@ const WikiFacts = () => {
     setLoading(false)
     setListFavs(bringFavs("factsFavs"))
   }, [])
+
+
+  function handleFilter(e) {
+    setFilter(e.target.value)
+    const newList = factsList.filter((item) => {
+      return item.fact.toLowerCase().includes(filter.toLowerCase())
+    })
+    setFilteredList(newList)
+  }
 
 
   // Renderizar solo cuando la carga ha terminado
@@ -57,12 +68,10 @@ const WikiFacts = () => {
   return (
     <>
       <h1>WikiFacts</h1>
+      <input type="text" onChange={ handleFilter } />
       <section className='section-facts'>
-        {/*
-          loading && <p>Loading...</p>
-      */}
         {
-          factsList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
+          filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
             return (
             <div key={ index }>
               <p>

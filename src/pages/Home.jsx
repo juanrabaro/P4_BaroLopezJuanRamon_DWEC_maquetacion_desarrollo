@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LoginForm from '../components/LoginForm'
 import SigninForm from '../components/SigninForm'
 
@@ -11,6 +11,8 @@ const Home = () => {
     const fact = await res.json()
     setRandomFact(fact.fact)
   }
+  
+
 
   return (
     <>
