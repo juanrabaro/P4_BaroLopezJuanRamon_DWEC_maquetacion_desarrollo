@@ -16,10 +16,9 @@ const WikiFacts = () => {
 
 
   // Añadir a favoritos
-  function addFavourite(index) {
-    console.log(factsList[index+((pagCount-1)*20)])
-    const newListFav = factsList.filter((fact) => {
-      return fact === factsList[index+((pagCount-1)*20)]
+  function addFavourite(id) {
+    const newListFav = filteredList.filter((fact) => {
+      return fact === filteredList[id]
     })
     
     const newFav = newListFav[0]
@@ -42,21 +41,16 @@ const WikiFacts = () => {
   function nextPag() {
     pagCount < Math.ceil(filteredList.length/20) && setPagCount(++pagCount)
   }
+
+  useEffect(() => {
+    setPagCount(1)
+  }, [filter])
+  
   
 
   useEffect(() => {
     setLoading(false)
     setListFavs(bringFavs("factsFavs"))
-
-
-    /*const newFactsList = factsList.map((item, index) => {
-      var newObj = { ...item }
-      delete newObj["length"]
-      newObj.id = index
-      return newObj
-    })
-
-    setFactsList(newFactsList)*/
   }, [])
 
 
@@ -65,7 +59,14 @@ const WikiFacts = () => {
     const newList = factsList.filter((item) => {
       return item.fact.toLowerCase().includes(filter.toLowerCase())
     })
-    setFilteredList(newList)
+    
+
+    // no funciona
+    if ( filter === "" ) {
+      setFilteredList(factsList)
+    } else {
+      setFilteredList(newList)
+    }
   }
 
 
@@ -88,7 +89,7 @@ const WikiFacts = () => {
                 { item.fact }
               </p>
               {
-                listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) ? <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> : <button onClick={ () => addFavourite(index) }>Añadir a favoritos⭐</button>
+                listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) ? <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> : <button onClick={ () => addFavourite(item.id) }>Añadir a favoritos⭐</button>
               }
               <Link to={`/facts/${item.id+1}`}>View Fact</Link>
             </div>
