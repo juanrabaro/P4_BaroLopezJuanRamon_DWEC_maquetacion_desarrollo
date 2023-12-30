@@ -6,7 +6,7 @@ const WikiFacts = () => {
 
   const { facts } = useLoaderData()
   
-  const [factsList, setFactsList] = useState(facts.data)
+  const [factsList, setFactsList] = useState(facts)
   var [pagCount, setPagCount] = useState(1)
   const [listFavs, setListFavs] = useState([])
   const [loading, setLoading] = useState(true)
@@ -47,6 +47,16 @@ const WikiFacts = () => {
   useEffect(() => {
     setLoading(false)
     setListFavs(bringFavs("factsFavs"))
+
+
+    /*const newFactsList = factsList.map((item, index) => {
+      var newObj = { ...item }
+      delete newObj["length"]
+      newObj.id = index
+      return newObj
+    })
+
+    setFactsList(newFactsList)*/
   }, [])
 
 
@@ -73,14 +83,14 @@ const WikiFacts = () => {
         {
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
             return (
-            <div key={ index }>
-              <p>
+            <div key={ item.id }>
+              <p id={ item.id }>
                 { item.fact }
               </p>
               {
                 listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) ? <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> : <button onClick={ () => addFavourite(index) }>Añadir a favoritos⭐</button>
               }
-              <Link to={`/facts/${(index+1)+((pagCount-1)*20)}`}>View Fact</Link>
+              <Link to={`/facts/${item.id+1}`}>View Fact</Link>
             </div>
             )
           })
@@ -100,5 +110,15 @@ export default WikiFacts
 export const loaderFacts = async() => {
   const res = await fetch("https://catfact.ninja/facts?limit=332")
   const facts = await res.json()
-  return { facts }
+
+  const newFactsList = facts.data.map((item, index) => {
+    var newObj = { ...item }
+    delete newObj["length"]
+    newObj.id = index
+    return newObj
+  })
+
+  const modifiedFacts = newFactsList
+
+  return { facts: modifiedFacts }
 }

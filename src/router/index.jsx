@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
         loader: loaderFacts,
       },
       {
-        path: "/facts/:index",
+        path: "/facts/:id",
         element: <Fact />,
         loader: loaderFact,
       },
