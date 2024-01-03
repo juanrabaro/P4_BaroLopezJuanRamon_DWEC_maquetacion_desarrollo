@@ -10,7 +10,45 @@ const WikiBreeds = () => {
   const [listFavs, setListFavs] = useState([])
   var [pagCount, setPagCount] = useState(1)
   const [loading, setLoading] = useState(true)
+  const [filteredList, setFilteredList] = useState(breedsList)
+  const [filter, setFilter] = useState({
+    breed: "",
+    country: "",
+    origin: "",
+    coat: "",
+    pattern: "",
+  })
 
+  // Listas para selects filtros
+  var posiblyBreedList = []
+  var posiblyCountryList = []
+  var posiblyOriginList = []
+  var posiblyCoatList = []
+  var posiblyPatternList = []
+  // Todas las posibilidades de todos los atributos
+  breeds.forEach((breedObject) => {
+    if (!posiblyBreedList.includes(breedObject.breed) && breedObject.breed !== ""){
+      posiblyBreedList.push(breedObject.breed)
+    }
+    if (!posiblyCountryList.includes(breedObject.country) && breedObject.country !== ""){
+      posiblyCountryList.push(breedObject.country)
+    }
+    if (!posiblyOriginList.includes(breedObject.origin) && breedObject.origin !== ""){
+      posiblyOriginList.push(breedObject.origin)
+    }
+    if (!posiblyCoatList.includes(breedObject.coat) && breedObject.coat !== ""){
+      posiblyCoatList.push(breedObject.coat)
+    }
+    if (!posiblyPatternList.includes(breedObject.pattern) && breedObject.pattern !== ""){
+      posiblyPatternList.push(breedObject.pattern)
+    }
+  })
+  // Ordenar alfabéticamente
+  posiblyBreedList = posiblyBreedList.sort()
+  posiblyCountryList = posiblyCountryList.sort()
+  posiblyOriginList = posiblyOriginList.sort()
+  posiblyCoatList = posiblyCoatList.sort()
+  posiblyPatternList = posiblyPatternList.sort()
 
   useEffect(() => {
     setLoading(false)
@@ -46,15 +84,83 @@ const WikiBreeds = () => {
   }
 
 
+  function handleChange(e) {
+    const { value, name } = e.target
+    setFilter({
+      ...filter,
+      [name]: value
+    })
+  }
+
+  useEffect(() => {
+    //var lista = filteredList
+    setFilteredList(breedsList.filter((item) => {
+      var flag = true
+
+      flag = (filter.breed !== "" && filter.breed !== item.breed) ? false : flag
+      flag = (filter.origin !== "" && filter.origin !== item.origin) ? false : flag
+      flag = (filter.country !== "" && filter.country !== item.country) ? false : flag
+      flag = (filter.coat !== "" && filter.coat !== item.coat) ? false : flag
+      flag = (filter.pattern !== "" && filter.pattern !== item.pattern) ? false : flag
+
+
+      if ( flag ) {
+        return item
+      }
+    }))
+  }, [filter])
+  
+
+
   return (
     <>
       <h1>WikiBreeds</h1>
+      <select name='breed' onChange={ handleChange }>
+        <option value="">Breed</option>
+        {
+          posiblyBreedList.map((item, index) => {
+            return <option key={ index } value={ item }>{ item }</option>
+          })
+        }
+      </select>
+      <select name='country' onChange={ handleChange }>
+        <option value="">Country</option>
+        {
+          posiblyCountryList.map((item, index) => {
+            return <option key={ index } value={ item }>{ item }</option>
+          })
+        }
+      </select>
+      <select name='origin' onChange={ handleChange }>
+        <option value="">Origin</option>
+        {
+          posiblyOriginList.map((item, index) => {
+            return <option key={ index } value={ item }>{ item }</option>
+          })
+        }
+      </select>
+      <select name='coat' onChange={ handleChange }>
+        <option value="">Coat</option>
+        {
+          posiblyCoatList.map((item, index) => {
+            return <option key={ index } value={ item }>{ item }</option>
+          })
+        }
+      </select>
+      <select name='pattern' onChange={ handleChange }>
+        <option value="">Pattern</option>
+        {
+          posiblyPatternList.map((item, index) => {
+            return <option key={ index } value={ item }>{ item }</option>
+          })
+        }
+      </select>
       <section className='section-breeds'>
         {
           loading && <p>Loading...</p>
         }
         {
-          breedsList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
+          filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
             return (
             <div key={ item.id } id={ item.id }>
               <p>
