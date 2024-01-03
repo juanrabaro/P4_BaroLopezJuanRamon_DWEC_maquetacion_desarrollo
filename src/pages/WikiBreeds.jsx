@@ -60,7 +60,7 @@ const WikiBreeds = () => {
     pagCount > 1 && setPagCount(--pagCount)
   }
   function nextPag() {
-    pagCount < 5 && setPagCount(++pagCount)
+    pagCount < Math.ceil(filteredList.length/20) && setPagCount(++pagCount)
   }
   
 
@@ -93,10 +93,16 @@ const WikiBreeds = () => {
   }
 
   useEffect(() => {
-    //var lista = filteredList
     setFilteredList(breedsList.filter((item) => {
       var flag = true
 
+      /*
+        Por ejemplo si el breed que has seleccionado en el select(filter.breed) no es igual
+        al del item actual del bucle(item.breed) o si el filtro está en deffault entonces
+        ese item no vale puesto que no cumple con la condicion de breed por lo cual no es válida,
+        esto se hace con todas las posibles categorias y así se van descartando los objetos 1 a 1
+        para sacar solo los que realmente encajen
+      */
       flag = (filter.breed !== "" && filter.breed !== item.breed) ? false : flag
       flag = (filter.origin !== "" && filter.origin !== item.origin) ? false : flag
       flag = (filter.country !== "" && filter.country !== item.country) ? false : flag
@@ -108,9 +114,10 @@ const WikiBreeds = () => {
         return item
       }
     }))
+    setPagCount(1)
   }, [filter])
   
-
+// FALTA PONER NO HAY ELEMENTOS QUE COINCIDAN CON TÚ BÚSQUEDA Y CONTROLAR PAGCOUNT Y QUE CUANDO SE HAGA UN FILTRO NOS MANDE A LA PAGCOUNT 1
 
   return (
     <>
@@ -160,6 +167,7 @@ const WikiBreeds = () => {
           loading && <p>Loading...</p>
         }
         {
+          !filteredList.length ? <p>There is no result for your specifications</p> :
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
             return (
             <div key={ item.id } id={ item.id }>

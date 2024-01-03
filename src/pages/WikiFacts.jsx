@@ -18,12 +18,15 @@ const WikiFacts = () => {
   // Añadir a favoritos
   function addFavourite(id) {
     const newListFav = filteredList.filter((fact) => {
-      return fact === filteredList[id]
+      return fact === factsList[id]
     })
+    console.log(id)
+    console.log(newListFav)
+    console.log(newListFav[0])
     
     const newFav = newListFav[0]
-    setListFavs([...listFavs, newFav])
     uploadFav([...listFavs, newFav], "factsFavs")
+    setListFavs([...listFavs, newFav])
   }
 
   function deleteFavourite(object) {
@@ -61,7 +64,7 @@ const WikiFacts = () => {
     })
     
 
-    // no funciona
+    // no funciona bien cuando se borran caracteres del filtro pero en general funciona el filtro
     if ( filter === "" ) {
       setFilteredList(factsList)
     } else {
@@ -74,6 +77,9 @@ const WikiFacts = () => {
     <>
       <h1>WikiFacts</h1>
       <input type="text" onChange={ handleFilter } placeholder='Find by keywords' />
+      {
+        !filteredList.length && <p>There is no result for your specifications</p>
+      }
       <section className='section-facts'>
         {
           loading && <p>Loading...</p>
