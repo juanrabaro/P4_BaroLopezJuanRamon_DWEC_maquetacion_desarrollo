@@ -19,8 +19,8 @@ const Breed = () => {
 export default Breed
 
 export async function loaderBreed({ params }) {
-  const res = await fetch(`https://catfact.ninja/breeds?limit=${params.index}`)
+  const res = await fetch(`https://catfact.ninja/breeds?limit=${params.id}`)
   const data = await res.json()
-  const breed = await data.data[params.index-1]
+  const breed = await data.data[params.id-1]
   return { breed }
 }

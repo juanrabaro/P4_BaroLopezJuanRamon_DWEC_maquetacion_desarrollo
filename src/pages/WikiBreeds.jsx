@@ -6,7 +6,7 @@ const WikiBreeds = () => {
 
   const { breeds } = useLoaderData()
   
-  const [breedsList, setBreedsList] = useState(breeds.data)
+  const [breedsList, setBreedsList] = useState(breeds)
   const [listFavs, setListFavs] = useState([])
   var [pagCount, setPagCount] = useState(1)
   const [loading, setLoading] = useState(true)
@@ -27,9 +27,9 @@ const WikiBreeds = () => {
   
 
   // Añadir a favoritos
-  function addFavourite(index) {
+  function addFavourite(id) {
     const newBreedList = breedsList.filter((breed) => {
-      return breed === breedsList[index+((pagCount-1)*20)]
+      return breed === breedsList[id]
     })
     
     const newFav = newBreedList[0]
@@ -37,18 +37,12 @@ const WikiBreeds = () => {
     uploadFav([...listFavs, newFav], "breedsFavs")
   }
 
-  function deleteFavourite(objeto) {
-    const newBreedList = breedsList.filter((item) => {
-      return JSON.stringify(item) !== JSON.stringify(objeto)
-    })    
+  function deleteFavourite(object) {
+    const newBreedList = listFavs.filter((item) => {
+      return item.id !== object.id
+    })
     setListFavs(newBreedList)
     uploadFav(newBreedList, "breedsFavs")
-  }
-  
-
-  // Renderizar solo cuando la carga ha terminado
-  if (loading) {
-    return <p>Loading...</p>
   }
 
 
@@ -60,9 +54,9 @@ const WikiBreeds = () => {
           loading && <p>Loading...</p>
         }
         {
-          breedsList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
+          breedsList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
             return (
-            <div key={ index }>
+            <div key={ item.id } id={ item.id }>
               <p>
                 Breed - { item.breed }
               </p>
@@ -79,9 +73,9 @@ const WikiBreeds = () => {
                 Pattern - { item.pattern }
               </p>
               {
-                listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) ? <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> : <button onClick={ () => addFavourite(index) }>Añadir a favoritos⭐</button>
+                listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) ? <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> : <button onClick={ () => addFavourite(item.id) }>Añadir a favoritos⭐</button>
               }
-              <Link to={`/breeds/${(index+1)+((pagCount-1)*20)}`}>View Breed</Link>
+              <Link to={`/breeds/${ item.id+1 }`}>View Breed</Link>
             </div>
             )
           })
@@ -102,5 +96,13 @@ export default WikiBreeds
 export const loaderBreeds = async() => {
   const res = await fetch("https://catfact.ninja/breeds?limit=98")
   const breeds = await res.json()
-  return { breeds }
+  const newBreedsList = breeds.data.map((item, index) => {
+    var newObj = { ...item }
+    newObj.id = index
+    return newObj
+  })
+
+  const modifiedBreeds = newBreedsList
+
+  return { breeds: modifiedBreeds }
 }

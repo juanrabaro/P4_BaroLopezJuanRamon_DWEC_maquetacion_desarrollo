@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
         loader: loaderBreeds,
       },
       {
-        path: "/breeds/:index",
+        path: "/breeds/:id",
         element: <Breed />,
         loader: loaderBreed,
       },

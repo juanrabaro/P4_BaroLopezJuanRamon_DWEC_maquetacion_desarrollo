@@ -26,9 +26,9 @@ const WikiFacts = () => {
     uploadFav([...listFavs, newFav], "factsFavs")
   }
 
-  function deleteFavourite(objeto) {
+  function deleteFavourite(object) {
     const newListFav = listFavs.filter((item) => {
-      return JSON.stringify(item) !== JSON.stringify(objeto)
+      return JSON.stringify(item) !== JSON.stringify(object)
     })    
     setListFavs(newListFav)
     uploadFav(newListFav, "factsFavs")
@@ -70,19 +70,16 @@ const WikiFacts = () => {
   }
 
 
-  // Renderizar solo cuando la carga ha terminado
-  if (loading) {
-    return <p>Loading...</p>
-  }
-
-
   return (
     <>
       <h1>WikiFacts</h1>
       <input type="text" onChange={ handleFilter } placeholder='Find by keywords' />
       <section className='section-facts'>
         {
-          filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
+          loading && <p>Loading...</p>
+        }
+        {
+          filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
             return (
             <div key={ item.id }>
               <p id={ item.id }>
