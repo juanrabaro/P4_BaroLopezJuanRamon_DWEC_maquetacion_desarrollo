@@ -38,7 +38,7 @@ const SigninForm = () => {
       return JSON.stringify(userObj) === JSON.stringify(formUser)
     })
 
-    userSigned.length && setUser(true)
+    userSigned.length && (setUser(true), localStorage.setItem("userLogged", true))
 
   }
 
