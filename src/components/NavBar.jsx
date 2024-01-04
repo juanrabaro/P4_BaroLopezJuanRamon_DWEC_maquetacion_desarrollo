@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/userContext'
 
@@ -22,9 +22,17 @@ const NavBar = () => {
         <Link to="/">Home</Link>
         <Link to="/facts">Wiki Facts</Link>
         <Link to="/breeds">Wiki Breeds</Link>
-        <Link to="/favourites">Favourites</Link>
-        <Link to="/signin">Sign In</Link>
-        <Link to="/login">Log in</Link>
+        {
+          user && <Link to="/favourites">Favourites</Link>
+        }
+        {
+          !user && (
+            <>
+              <Link to="/signin">Sign In</Link>
+              <Link to="/login">Log in</Link>
+            </>
+          )
+        }
         {
           user && (
             <>

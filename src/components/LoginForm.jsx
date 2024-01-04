@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { bringUsers, uploadUser } from '../assets/localStorage'
 import { UserContext } from '../context/userContext'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = () => {
 
@@ -13,6 +14,11 @@ const LoginForm = () => {
   // validar email y pwd
   const [emailValid, setEmailValid] = useState(false)
   const [pwdValid, setPwdValid] = useState(false)
+
+  const [repUser, setRepUser] = useState(false)
+  const repUserMessage = "The user is already created, try SIGN IN"
+  const hideMessage = useRef(null)
+  const navigate = useNavigate()
 
   // lista todos usuarios
   const [listUsers, setListUsers] = useState([])
@@ -45,7 +51,6 @@ const LoginForm = () => {
   
   
   function validation(name, value) {
-    
     if ( name === "email" ) {
       // Expresión regular para validar un formato de correo electrónico básico
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -76,17 +81,35 @@ const LoginForm = () => {
   // cuando se hace submit se ejecuta
   function logIn(e) {
     e.preventDefault()
-    // actualiza lista de usuarios
-    setListUsers(prevListUsers => {
-      const updatedListUsers = [...prevListUsers, formUser]
-      // añade al localStorage la nueva lista de usuarios
-      uploadUser(updatedListUsers)
-      return updatedListUsers
+
+    const repUsers = listUsers.filter((userObj) => {
+      return userObj.email === formUser.email
     })
 
-    // usuario logeado activa layouts privados
-    localStorage.setItem("userLogged", true)
-    setUser(true)
+
+    if ( !repUsers.length ) {
+      // the user is not a rep user 
+      // actualiza lista de usuarios
+      setListUsers(prevListUsers => {
+        const updatedListUsers = [...prevListUsers, formUser]
+        // añade al localStorage la nueva lista de usuarios
+        uploadUser(updatedListUsers)
+        return updatedListUsers
+      })
+      // usuario logeado activa layouts privados
+      localStorage.setItem("userLogged", true)
+      setUser(true)
+      navigate("/")
+      return
+    }
+    // the user is a rep user
+    setRepUser(true)
+    if (hideMessage.current) {
+      clearTimeout(hideMessage.current)
+    }
+    hideMessage.current = setTimeout(() => {
+      setRepUser(false)
+    }, 2000)
   }
 
 
@@ -99,7 +122,10 @@ const LoginForm = () => {
         {
           !validData && <div>{ errorMessage }</div>
         }
-        <button disabled={ !validData }>Log in</button>        
+        <button disabled={ !validData }>Log in</button>
+        {
+          repUser && <p>{ repUserMessage }</p>
+        }
       </form>
     </>
   )
