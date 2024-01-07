@@ -86,14 +86,13 @@ const LoginForm = () => {
       return userObj.email === formUser.email
     })
 
-
+    
     if ( !repUsers.length ) {
-      // the user is not a rep user 
+      // the user is not a rep user
       // actualiza lista de usuarios
       setListUsers(prevListUsers => {
         const updatedListUsers = [...prevListUsers, formUser]
         // añade al localStorage la nueva lista de usuarios
-        uploadUser(updatedListUsers)
         return updatedListUsers
       })
       // usuario logeado activa layouts privados
@@ -111,6 +110,12 @@ const LoginForm = () => {
       setRepUser(false)
     }, 2000)
   }
+  
+  
+  useEffect(() => {
+    uploadUser(listUsers)
+  }, [listUsers])
+  
 
 
   return (
