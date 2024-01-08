@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
-import { bringFavs, uploadFav } from '../assets/localStorage'
+import { bringFavs, uploadFav } from '../assets/localStorage/localStorage'
+import { UserContext } from '../context/userContext'
 
 const WikiFacts = () => {
 
   const { facts } = useLoaderData()
+  const { user, setUser } = useContext(UserContext)
   
   const [factsList, setFactsList] = useState(facts)
   var [pagCount, setPagCount] = useState(1)
@@ -12,21 +14,36 @@ const WikiFacts = () => {
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState("")
   const [filteredList, setFilteredList] = useState(factsList)
+  const [notRegistered, setNotRegistered] = useState(false)
+  const hideMessage = useRef(null)
   
 
 
   // Añadir a favoritos
   function addFavourite(id) {
-    const newListFav = filteredList.filter((fact) => {
-      return fact === factsList[id]
-    })
-    console.log(id)
-    console.log(newListFav)
-    console.log(newListFav[0])
-    
-    const newFav = newListFav[0]
-    uploadFav([...listFavs, newFav], "factsFavs")
-    setListFavs([...listFavs, newFav])
+    // si el usuario está registrado puede guardar en favs
+    if ( user ) {
+      const newListFav = filteredList.filter((fact) => {
+        return fact === factsList[id]
+      })
+      //console.log(id)
+      //console.log(newListFav)
+      console.log(newListFav[0])
+      const newFav = newListFav[0]
+
+      uploadFav([...listFavs, newFav], "factsFavs")
+      setListFavs([...listFavs, newFav])
+      return
+    }
+
+    // si el usuario no está registrado no puede guardar en favs
+    setNotRegistered(true)
+    if (hideMessage.current) {
+      clearTimeout(hideMessage.current)
+    }
+    hideMessage.current = setTimeout(() => {
+      setNotRegistered(false)
+    }, 2000)
   }
 
   function deleteFavourite(object) {
@@ -76,6 +93,9 @@ const WikiFacts = () => {
   return (
     <>
       <h1>WikiFacts</h1>
+      {
+        notRegistered && <p>You have to be registered to save your facts in favourites!</p>
+      }
       <input type="text" onChange={ handleFilter } placeholder='Find by keywords' />
       {
         !filteredList.length && <p>There is no result for your specifications</p>
@@ -92,7 +112,10 @@ const WikiFacts = () => {
                 { item.fact }
               </p>
               {
-                listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) ? <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> : <button onClick={ () => addFavourite(item.id) }>Añadir a favoritos⭐</button>
+                (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
+                <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> 
+                :
+                <button onClick={ () => addFavourite(item.id) }>Añadir a favoritos⭐</button>
               }
               <Link to={`/facts/${item.id+1}`}>View Fact</Link>
             </div>

@@ -1,0 +1,31 @@
+// Funciones formulario pagina index
+@mixin cuadro-form {
+    background-color: #A3439E;
+    border-radius: 20px;
+}
+@mixin botones-form {
+    text-decoration: none;
+    color: black;
+    background-color: $verdeClaro;
+    border-radius: 12px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    padding: 13px;
+    width: 125px;
+    font-family: $fuenteTitulos;
+    font-size: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+@mixin organizacion-inputs {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+@mixin inputs {
+    border-radius: 10px;
+    background-color: $rosaClaro;
+    color: black;
+}

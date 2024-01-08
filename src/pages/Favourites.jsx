@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { bringFavs } from '../assets/localStorage'
+import { bringFavs } from '../assets/localStorage/localStorage'
 
 const Favourites = () => {
 

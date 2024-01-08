@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
-import { bringFavs, uploadFav } from '../assets/localStorage'
+import { bringFavs, uploadFav } from '../assets/localStorage/localStorage'
+import { UserContext } from '../context/userContext'
 
 const WikiBreeds = () => {
 
   const { breeds } = useLoaderData()
+  const { user, setUser } = useContext(UserContext)
   
   const [breedsList, setBreedsList] = useState(breeds)
   const [listFavs, setListFavs] = useState([])
@@ -187,7 +189,10 @@ const WikiBreeds = () => {
                 Pattern - { item.pattern }
               </p>
               {
-                listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) ? <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> : <button onClick={ () => addFavourite(item.id) }>Añadir a favoritos⭐</button>
+                (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
+                <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button>
+                :
+                <button onClick={ () => addFavourite(item.id) }>Añadir a favoritos⭐</button>
               }
               <Link to={`/breeds/${ item.id+1 }`}>View Breed</Link>
             </div>

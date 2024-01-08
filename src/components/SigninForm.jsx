@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { bringUsers } from '../assets/localStorage'
+import { bringUsers } from '../assets/localStorage/localStorage'
 import { UserContext } from '../context/userContext'
+import { useNavigate } from 'react-router-dom'
 
 const SigninForm = () => {
   
@@ -14,6 +15,7 @@ const SigninForm = () => {
   const [message, setMessage] = useState("Correo y/o contraseña no válidos")
   // controlar si los datos del formulario están correctos o no
   const [incorrectForm, setIncorrectForm] = useState(false)
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const SigninForm = () => {
       return JSON.stringify(userObj) === JSON.stringify(formUser)
     })
 
-    userSigned.length ? (setUser(true), localStorage.setItem("userLogged", true)) : setIncorrectForm(true)
+    userSigned.length ? (setUser(true), localStorage.setItem("userLogged", true ), navigate("/")) : setIncorrectForm(true)
 
     if (hideMessage.current) {
       clearTimeout(hideMessage.current)

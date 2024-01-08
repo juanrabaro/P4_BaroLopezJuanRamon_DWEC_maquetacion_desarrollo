@@ -1,8 +1,11 @@
-@import "./assets/scss/reset.scss";
-@import "./assets/scss/header.scss";
-@import "./assets/scss/main.scss";
-@import "./assets/scss/footer.scss";
-@import "./assets/scss/wikiFacts.scss";
-@import "./assets/scss/wikiBreeds.scss";
-@import "./assets/scss/favourites.scss";
-@import "./assets/scss/login.scss";
+@import "./assets/scss/base/_reset.scss";
+@import "./assets/scss/base/_typo.scss";
+
+//@import "./assets/scss/main.scss";
+@import "./assets/scss/layout/_header.scss";
+@import "./assets/scss/layout/_footer.scss";
+
+@import "./assets/scss/views/_wikiFacts.scss";
+@import "./assets/scss/views/_wikiBreeds.scss";
+@import "./assets/scss/views/_favourites.scss";
+@import "./assets/scss/views/_login.scss";

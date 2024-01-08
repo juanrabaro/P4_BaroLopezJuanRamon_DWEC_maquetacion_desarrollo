@@ -4,18 +4,17 @@ export const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
 
-  
-  
   const [user, setUser] = useState(false)
   
   useEffect(() => {
-    const userLogged = localStorage.getItem("userLogged")
-    
-    setUser(JSON.parse(userLogged))
+    setUser(JSON.parse(localStorage.getItem("userLogged")))
   }, [])
+
   
-  
-  
+  if (user && !JSON.parse(localStorage.getItem("userLogged"))) {
+    setUser(false)
+  }
+
 
   return (
     <UserContext.Provider value={ {user, setUser} }>
