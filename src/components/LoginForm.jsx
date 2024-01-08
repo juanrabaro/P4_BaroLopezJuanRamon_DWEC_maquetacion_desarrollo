@@ -21,12 +21,12 @@ const LoginForm = () => {
   const navigate = useNavigate()
 
   // lista todos usuarios
-  const [listUsers, setListUsers] = useState([])
-
   // llenar lista usuarios con datos del localStorage
-  useEffect(() => {
-    setListUsers(bringUsers())
-  }, [])
+  const [listUsers, setListUsers] = useState(bringUsers())
+
+  //useEffect(() => {
+  //  setListUsers(bringUsers())
+  //}, [])
   
 
   // estado de los datos del usuario en tiempo real
@@ -91,10 +91,13 @@ const LoginForm = () => {
       // the user is not a rep user
       // actualiza lista de usuarios
       setListUsers(prevListUsers => {
-        const updatedListUsers = [...prevListUsers, formUser]
-        // añade al localStorage la nueva lista de usuarios
-        return updatedListUsers
+        [...prevListUsers, formUser]
       })
+      
+      // añade al localStorage la nueva lista de usuarios
+      //localStorage.setItem("users", JSON.stringify([...listUsers, formUser]))
+      uploadUser([...listUsers, formUser])
+
       // usuario logeado activa layouts privados
       localStorage.setItem("userLogged", true)
       setUser(true)
@@ -110,11 +113,6 @@ const LoginForm = () => {
       setRepUser(false)
     }, 2000)
   }
-  
-  
-  useEffect(() => {
-    uploadUser(listUsers)
-  }, [listUsers])
   
 
 
