@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { bringFavs } from '../localStorage/localStorage'
+import { bringFavs, uploadFav } from '../localStorage/localStorage'
 
 const FavouriteBreeds = () => {
 
+  // list of facts favourites
   const [breedsFav, setBreedsFav] = useState([])
 
+
+  // Bring the data of facts favourites in localStorage
   useEffect(() => {
     setBreedsFav(bringFavs("breedsFavs"))
   }, [])
+
+
+  function deleteFavourite(object) {
+    const newBreedList = breedsFav.filter((item) => {
+      return item.id !== object.id
+    })
+    setBreedsFav(newBreedList)
+    uploadFav(newBreedList, "breedsFavs")
+  }
+
   
   return (
     <>
@@ -17,21 +30,24 @@ const FavouriteBreeds = () => {
         breedsFav?.map((item, index) => {
           return (
             <div key={ index }>
-              <p>
-                Breed - { item.breed }
-              </p>
-              <p>
-                Country - { item.country }
-              </p>
-              <p>
-                Origin - { item.origin }
-              </p>
-              <p>
-                Coat - { item.coat }
-              </p>
-              <p>
-                Pattern - { item.pattern }
-              </p>
+              <div>
+                <p>
+                  Breed - { item.breed }
+                </p>
+                <p>
+                  Country - { item.country }
+                </p>
+                <p>
+                  Origin - { item.origin }
+                </p>
+                <p>
+                  Coat - { item.coat }
+                </p>
+                <p>
+                  Pattern - { item.pattern }
+                </p>
+              </div>
+              <button onClick={ () => deleteFavourite(item) }>Delete from favourites🛑</button>
             </div>
           )
         })

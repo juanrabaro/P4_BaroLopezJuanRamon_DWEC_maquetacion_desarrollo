@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
 import { bringFavs, uploadFav } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
+import PaginationCount from '../components/PaginationCount'
+import FilterBreeds from '../components/FilterBreeds'
 
 const WikiBreeds = () => {
 
@@ -17,6 +19,9 @@ const WikiBreeds = () => {
   
   // list of breeds favourites
   const [listFavs, setListFavs] = useState([])
+
+  // email userLogged
+  const [emailUserLogger, setEmailUserLogger] = useState(localStorage.getItem("userLoggedData")) || " "
   
   // state for the actual page of the pagination
   var [pagCount, setPagCount] = useState(1)
@@ -37,37 +42,6 @@ const WikiBreeds = () => {
     pattern: "",
   })
 
-  // List for the selects(filters)
-  var posiblyBreedList = []
-  var posiblyCountryList = []
-  var posiblyOriginList = []
-  var posiblyCoatList = []
-  var posiblyPatternList = []
-  // All the posibilities of all the atributes
-  breeds.forEach((breedObject) => {
-    if (!posiblyBreedList.includes(breedObject.breed) && breedObject.breed !== ""){
-      posiblyBreedList.push(breedObject.breed)
-    }
-    if (!posiblyCountryList.includes(breedObject.country) && breedObject.country !== ""){
-      posiblyCountryList.push(breedObject.country)
-    }
-    if (!posiblyOriginList.includes(breedObject.origin) && breedObject.origin !== ""){
-      posiblyOriginList.push(breedObject.origin)
-    }
-    if (!posiblyCoatList.includes(breedObject.coat) && breedObject.coat !== ""){
-      posiblyCoatList.push(breedObject.coat)
-    }
-    if (!posiblyPatternList.includes(breedObject.pattern) && breedObject.pattern !== ""){
-      posiblyPatternList.push(breedObject.pattern)
-    }
-  })
-  // Sort alphabetically the lists
-  posiblyBreedList = posiblyBreedList.sort()
-  posiblyCountryList = posiblyCountryList.sort()
-  posiblyOriginList = posiblyOriginList.sort()
-  posiblyCoatList = posiblyCoatList.sort()
-  posiblyPatternList = posiblyPatternList.sort()
-
   
   // initial useEffect bring the breeds in favs and setLoading false(not working)
   useEffect(() => {
@@ -75,52 +49,6 @@ const WikiBreeds = () => {
     setListFavs(bringFavs("breedsFavs"))
   }, [])
 
-
-  // refresh the state filter with the data of the filters
-  function handleChange(e) {
-    const { value, name } = e.target
-    setFilter({
-      ...filter,
-      [name]: value
-    })
-  }
-
-
-  // which data is rendered using the state filter
-  useEffect(() => {
-    setFilteredList(breedsList.filter((item) => {
-      var flag = true
-
-      /*
-        Por ejemplo si el breed que has seleccionado en el select(filter.breed) no es igual
-        al del item actual del bucle(item.breed) o si el filtro está en deffault entonces
-        ese item no vale puesto que no cumple con la condicion de breed por lo cual no es válida,
-        esto se hace con todas las posibles categorias y así se van descartando los objetos 1 a 1
-        para sacar solo los que realmente encajen
-      */
-      flag = (filter.breed !== "" && filter.breed !== item.breed) ? false : flag
-      flag = (filter.origin !== "" && filter.origin !== item.origin) ? false : flag
-      flag = (filter.country !== "" && filter.country !== item.country) ? false : flag
-      flag = (filter.coat !== "" && filter.coat !== item.coat) ? false : flag
-      flag = (filter.pattern !== "" && filter.pattern !== item.pattern) ? false : flag
-
-
-      if ( flag ) {
-        return item
-      }
-    }))
-    setPagCount(1)
-  }, [filter])
-
-
-  // control the state pageCount
-  function prevPag() {
-    pagCount > 1 && setPagCount(--pagCount)
-  }
-  function nextPag() {
-    pagCount < Math.ceil(filteredList.length/20) && setPagCount(++pagCount)
-  }
-  
 
   function addFavourite(id) {
     // user is registered so save the data to localStorage
@@ -132,6 +60,22 @@ const WikiBreeds = () => {
       const newFav = newBreedList[0]
       setListFavs([...listFavs, newFav])
       uploadFav([...listFavs, newFav], "breedsFavs")
+      
+      /*
+      const newListFavs = JSON.parse(localStorage.getItem("breedsFavs")) || []
+      const userFavs = newListFavs.map((item) => {
+        if ( item.email === emailUserLogger ) {
+          console.log(item.favs)
+          return item.favs
+        }
+      })
+      console.log(userFavs)
+      const newDataFavs = {
+        email: emailUserLogger, favs: [...userFavs, newFav]
+      }
+      uploadFav([...newListFavs, newDataFavs], "breedsFavs")
+      setListFavs([...newListFavs, newFav])
+      */
       return
     }
 
@@ -160,46 +104,8 @@ const WikiBreeds = () => {
       {
         notRegistered && <p>You have to be registered to save your facts in favourites!</p>
       }
-      <select name='breed' onChange={ handleChange }>
-        <option value="">Breed</option>
-        {
-          posiblyBreedList.map((item, index) => {
-            return <option key={ index } value={ item }>{ item }</option>
-          })
-        }
-      </select>
-      <select name='country' onChange={ handleChange }>
-        <option value="">Country</option>
-        {
-          posiblyCountryList.map((item, index) => {
-            return <option key={ index } value={ item }>{ item }</option>
-          })
-        }
-      </select>
-      <select name='origin' onChange={ handleChange }>
-        <option value="">Origin</option>
-        {
-          posiblyOriginList.map((item, index) => {
-            return <option key={ index } value={ item }>{ item }</option>
-          })
-        }
-      </select>
-      <select name='coat' onChange={ handleChange }>
-        <option value="">Coat</option>
-        {
-          posiblyCoatList.map((item, index) => {
-            return <option key={ index } value={ item }>{ item }</option>
-          })
-        }
-      </select>
-      <select name='pattern' onChange={ handleChange }>
-        <option value="">Pattern</option>
-        {
-          posiblyPatternList.map((item, index) => {
-            return <option key={ index } value={ item }>{ item }</option>
-          })
-        }
-      </select>
+      <FilterBreeds filter={ filter } setFilter={ setFilter } breeds={ breeds } breedsList={ breedsList } setPagCount={ setPagCount } setFilteredList={ setFilteredList } />
+
       <section className='section-breeds'>
         {
           loading && <p>Loading...</p>
@@ -236,11 +142,7 @@ const WikiBreeds = () => {
           })
         }
       </section>
-      <section className='section-contador-paginacion'>
-        <button onClick={ prevPag }>Anterior</button>
-        <p>{ pagCount }</p>
-        <button onClick={ nextPag }>Siguiente</button>
-      </section>
+      <PaginationCount filter={ filter } filteredListLength={ filteredList.length } pagCount={ pagCount } setPagCount={ setPagCount }/>
     </>
   )
 }

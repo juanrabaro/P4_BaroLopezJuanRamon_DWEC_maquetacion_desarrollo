@@ -96,7 +96,7 @@ const LoginForm = () => {
       
       // añade al localStorage la nueva lista de usuarios
       uploadUser([...listUsers, formUser])
-      localStorage.setItem("userLoggedData", JSON.stringify(formUser))
+      localStorage.setItem("userLoggedData", formUser.email)
 
       // usuario logeado activa layouts privados
       localStorage.setItem("userLogged", true)

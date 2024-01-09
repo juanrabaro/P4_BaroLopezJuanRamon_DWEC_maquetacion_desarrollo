@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { bringFavs } from '../localStorage/localStorage'
+import { bringFavs, uploadFav } from '../localStorage/localStorage'
 
 const FavouriteFacts = () => {
 
+  // list of facts favourites
   const [factsFav, setFactsFav] = useState([])  
   
-  // Bring the data of facts and breeds favourites in localStorage
+
+  // Bring the data of facts favourites in localStorage
   useEffect(() => {
     setFactsFav(bringFavs("factsFavs"))
   }, [])
   
+
+  function deleteFavourite(object) {
+    const newBreedList = factsFav.filter((item) => {
+      return item.id !== object.id
+    })
+    setFactsFav(newBreedList)
+    uploadFav(newBreedList, "factsFavs")
+  }
+
 
   return (
     <>
@@ -17,7 +28,12 @@ const FavouriteFacts = () => {
       {
         !factsFav.length ? <p>No hay facts guardados en favoritos</p> :
         factsFav?.map((item, index) => {
-          return <p key={ index }>{ item.fact }</p>
+          return (
+            <div key={ index }>
+              <p>{ item.fact }</p>
+              <button onClick={ () => deleteFavourite(item) }>Delete from favourites🛑</button>
+            </div>
+          )
         })
       }
     </>

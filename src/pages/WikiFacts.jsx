@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
 import { bringFavs, uploadFav } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
+import PaginationCount from '../components/PaginationCount'
+import FilterFacts from '../components/FilterFacts'
 
 const WikiFacts = () => {
 
-  // if the user is logged is true else is false
+  // user logged?
   const { user, setUser } = useContext(UserContext)
 
   // all the facts from the API
@@ -39,23 +41,14 @@ const WikiFacts = () => {
   }, [])
 
 
-  // change pageCount to 1 if you write something in the filter
-  useEffect(() => {
-    setPagCount(1)
-  }, [filter])
-  
-
   function addFavourite(id) {
     // si el usuario está registrado puede guardar en favs
     if ( user ) {
       const newListFav = filteredList.filter((fact) => {
         return fact === factsList[id]
       })
-      //console.log(id)
-      //console.log(newListFav)
-      console.log(newListFav[0])
-      const newFav = newListFav[0]
 
+      const newFav = newListFav[0]
       uploadFav([...listFavs, newFav], "factsFavs")
       setListFavs([...listFavs, newFav])
       return
@@ -73,35 +66,10 @@ const WikiFacts = () => {
 
   function deleteFavourite(object) {
     const newListFav = listFavs.filter((item) => {
-      return JSON.stringify(item) !== JSON.stringify(object)
+      return item.id !== object.id
     })    
     setListFavs(newListFav)
     uploadFav(newListFav, "factsFavs")
-  }
-
-
-  // control the state pageCount
-  function prevPag() {
-    pagCount > 1 && setPagCount(--pagCount)
-  }
-  function nextPag() {
-    pagCount < Math.ceil(filteredList.length/20) && setPagCount(++pagCount)
-  }
-
-
-  // change the filter if the input filter data is changed 
-  function handleFilter(e) {
-    setFilter(e.target.value)
-    const newList = factsList.filter((item) => {
-      return item.fact.toLowerCase().includes(filter.toLowerCase())
-    })
-    
-    // the filter doesn't work as spected if you delete something sometimes
-    if ( filter === "" ) {
-      setFilteredList(factsList)
-    } else {
-      setFilteredList(newList)
-    }
   }
 
 
@@ -111,10 +79,9 @@ const WikiFacts = () => {
       {
         notRegistered && <p>You have to be registered to save your facts in favourites!</p>
       }
-      <input type="text" onChange={ handleFilter } placeholder='Find by keywords' />
-      {
-        !filteredList.length && <p>There is no result for your specifications</p>
-      }
+
+      <FilterFacts filteredListLength={ filteredList.length } setFilteredList={ setFilteredList } filter={ filter } setFilter={ setFilter } factsList={ factsList } />
+      
       <section className='section-facts'>
         {
           loading && <p>Loading...</p>
@@ -138,11 +105,9 @@ const WikiFacts = () => {
           })
         }
       </section>
-      <section className='section-contador-paginacion'>
-        <button onClick={ prevPag }>Anterior</button>
-        <p>{ pagCount }</p>
-        <button onClick={ nextPag }>Siguiente</button>
-      </section>
+
+      <PaginationCount filter={ filter } filteredListLength={ filteredList.length } pagCount={ pagCount } setPagCount={ setPagCount }/>
+    
     </>
   )
 }

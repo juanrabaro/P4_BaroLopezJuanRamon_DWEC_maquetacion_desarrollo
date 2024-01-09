@@ -55,7 +55,7 @@ const SigninForm = () => {
     })
 
     userSigned.length ? (setUser(true), localStorage.setItem("userLogged", true ), navigate("/")) : setIncorrectForm(true)
-    localStorage.setItem("userLoggedData", JSON.stringify(formUser))
+    localStorage.setItem("userLoggedData", formUser.email)
 
     if (hideMessage.current) {
       clearTimeout(hideMessage.current)

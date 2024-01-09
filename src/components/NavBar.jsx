@@ -1,20 +1,11 @@
 import React, { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { UserContext } from '../context/userContext'
+import LogoutButton from './LogoutButton'
 
 const NavBar = () => {
 
   const { user, setUser } = useContext(UserContext)
-  
-  const navigate = useNavigate()
-
-  function logout() {
-    setUser(false)
-    localStorage.setItem("userLogged", false)
-    navigate("/")
-  }
-
-
 
   return (
     <header>
@@ -37,7 +28,7 @@ const NavBar = () => {
           user && (
             <>
               <Link to="/profile">Profile</Link>
-              <button onClick={ logout }>Logout</button>
+              <LogoutButton setUser={ setUser }/>
             </>
           )
         }
