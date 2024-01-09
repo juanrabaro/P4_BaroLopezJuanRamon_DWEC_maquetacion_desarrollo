@@ -1,25 +1,50 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
-import { bringFavs, uploadFav } from '../assets/localStorage/localStorage'
+import { bringFavs, uploadFav } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 
 const WikiFacts = () => {
 
-  const { facts } = useLoaderData()
+  // if the user is logged is true else is false
   const { user, setUser } = useContext(UserContext)
-  
+
+  // all the facts from the API
+  const { facts } = useLoaderData()
   const [factsList, setFactsList] = useState(facts)
-  var [pagCount, setPagCount] = useState(1)
-  const [listFavs, setListFavs] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState("")
+  
+  // shown list with the filter applied(this list is the actual rendered all the time)
   const [filteredList, setFilteredList] = useState(factsList)
+  
+  // filter for the search filter
+  const [filter, setFilter] = useState("")
+
+  // state for the actual page of the pagination
+  var [pagCount, setPagCount] = useState(1)
+
+  // list of breeds favourites
+  const [listFavs, setListFavs] = useState([])
+
+  // loading message while the data is not ready(not working)
+  const [loading, setLoading] = useState(true)
+
+  // control if the user is logged for addFavourites
   const [notRegistered, setNotRegistered] = useState(false)
   const hideMessage = useRef(null)
   
 
+  // initial useEffect bring the breeds in favs and setLoading false(not working)
+  useEffect(() => {
+    setLoading(false)
+    setListFavs(bringFavs("factsFavs"))
+  }, [])
 
-  // Añadir a favoritos
+
+  // change pageCount to 1 if you write something in the filter
+  useEffect(() => {
+    setPagCount(1)
+  }, [filter])
+  
+
   function addFavourite(id) {
     // si el usuario está registrado puede guardar en favs
     if ( user ) {
@@ -55,6 +80,7 @@ const WikiFacts = () => {
   }
 
 
+  // control the state pageCount
   function prevPag() {
     pagCount > 1 && setPagCount(--pagCount)
   }
@@ -62,26 +88,15 @@ const WikiFacts = () => {
     pagCount < Math.ceil(filteredList.length/20) && setPagCount(++pagCount)
   }
 
-  useEffect(() => {
-    setPagCount(1)
-  }, [filter])
-  
-  
 
-  useEffect(() => {
-    setLoading(false)
-    setListFavs(bringFavs("factsFavs"))
-  }, [])
-
-
+  // change the filter if the input filter data is changed 
   function handleFilter(e) {
     setFilter(e.target.value)
     const newList = factsList.filter((item) => {
       return item.fact.toLowerCase().includes(filter.toLowerCase())
     })
     
-
-    // no funciona bien cuando se borran caracteres del filtro pero en general funciona el filtro
+    // the filter doesn't work as spected if you delete something sometimes
     if ( filter === "" ) {
       setFilteredList(factsList)
     } else {
@@ -113,9 +128,9 @@ const WikiFacts = () => {
               </p>
               {
                 (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
-                <button onClick={ () => deleteFavourite(item) }>Eliminar de favoritos🌟</button> 
+                <button onClick={ () => deleteFavourite(item) }>Delete from favourites🛑</button> 
                 :
-                <button onClick={ () => addFavourite(item.id) }>Añadir a favoritos⭐</button>
+                <button onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
               }
               <Link to={`/facts/${item.id+1}`}>View Fact</Link>
             </div>
@@ -133,19 +148,3 @@ const WikiFacts = () => {
 }
 
 export default WikiFacts
-
-export const loaderFacts = async() => {
-  const res = await fetch("https://catfact.ninja/facts?limit=332")
-  const facts = await res.json()
-
-  const newFactsList = facts.data.map((item, index) => {
-    var newObj = { ...item }
-    delete newObj["length"]
-    newObj.id = index
-    return newObj
-  })
-
-  const modifiedFacts = newFactsList
-
-  return { facts: modifiedFacts }
-}

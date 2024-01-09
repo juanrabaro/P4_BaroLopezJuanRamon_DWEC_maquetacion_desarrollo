@@ -11,11 +11,3 @@ const Fact = () => {
 }
 
 export default Fact
-
-
-export async function loaderFact({ params }) {
-  const res = await fetch(`https://catfact.ninja/facts?limit=${params.id}`)
-  const data = await res.json()
-  const fact = await data.data[params.id-1]
-  return { fact }
-}

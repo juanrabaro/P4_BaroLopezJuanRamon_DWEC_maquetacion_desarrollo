@@ -1,15 +1,19 @@
 import { createBrowserRouter } from "react-router-dom"
 import Home from "../pages/Home"
 import Profile from "../pages/Profile"
-import WikiFacts, { loaderFacts } from "../pages/WikiFacts"
-import Fact, { loaderFact } from "../pages/Fact"
-import WikiBreeds, { loaderBreeds } from "../pages/WikiBreeds"
+import WikiFacts from "../pages/WikiFacts"
+import { loaderFacts } from "../loaders"
+import Fact from "../pages/Fact"
+import { loaderFact } from "../loaders"
+import WikiBreeds from "../pages/WikiBreeds"
+import { loaderBreeds } from "../loaders"
+import Breed from "../pages/Breed"
+import { loaderBreed } from "../loaders"
 import Favourites from "../pages/Favourites"
 import SignInPage from "../pages/SignInPage"
 import LogInPage from "../pages/LogInPage"
 import LayoutPrivate from "../layouts/LayoutPrivate"
 import LayoutRoot from "../layouts/LayoutRoot"
-import Breed, { loaderBreed } from "../pages/Breed"
 
 export const router = createBrowserRouter([
   {
