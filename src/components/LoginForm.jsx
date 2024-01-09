@@ -87,16 +87,16 @@ const LoginForm = () => {
     })
 
     
+    // the user is not a rep user
     if ( !repUsers.length ) {
-      // the user is not a rep user
       // actualiza lista de usuarios
       setListUsers(prevListUsers => {
         [...prevListUsers, formUser]
       })
       
       // añade al localStorage la nueva lista de usuarios
-      //localStorage.setItem("users", JSON.stringify([...listUsers, formUser]))
       uploadUser([...listUsers, formUser])
+      localStorage.setItem("userLoggedData", JSON.stringify(formUser))
 
       // usuario logeado activa layouts privados
       localStorage.setItem("userLogged", true)

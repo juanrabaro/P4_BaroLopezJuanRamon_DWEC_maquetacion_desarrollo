@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
 import { bringFavs, uploadFav } from '../assets/localStorage/localStorage'
 import { UserContext } from '../context/userContext'
@@ -13,6 +13,8 @@ const WikiBreeds = () => {
   var [pagCount, setPagCount] = useState(1)
   const [loading, setLoading] = useState(true)
   const [filteredList, setFilteredList] = useState(breedsList)
+  const [notRegistered, setNotRegistered] = useState(false)
+  const hideMessage = useRef(null)
   const [filter, setFilter] = useState({
     breed: "",
     country: "",
@@ -58,6 +60,7 @@ const WikiBreeds = () => {
   }, [])
 
 
+  // control the page
   function prevPag() {
     pagCount > 1 && setPagCount(--pagCount)
   }
@@ -68,14 +71,28 @@ const WikiBreeds = () => {
 
   // Añadir a favoritos
   function addFavourite(id) {
-    const newBreedList = breedsList.filter((breed) => {
-      return breed === breedsList[id]
-    })
-    
-    const newFav = newBreedList[0]
-    setListFavs([...listFavs, newFav])
-    uploadFav([...listFavs, newFav], "breedsFavs")
+    // user is registered so save the data to localStorage
+    if ( user ) {
+      const newBreedList = breedsList.filter((breed) => {
+        return breed === breedsList[id]
+      })
+      
+      const newFav = newBreedList[0]
+      setListFavs([...listFavs, newFav])
+      uploadFav([...listFavs, newFav], "breedsFavs")
+      return
+    }
+
+    // not registered so enable for 2 sec the message
+    setNotRegistered(true)
+    if (hideMessage.current) {
+      clearTimeout(hideMessage.current)
+    }
+    hideMessage.current = setTimeout(() => {
+      setNotRegistered(false)
+    }, 2000)
   }
+
 
   function deleteFavourite(object) {
     const newBreedList = listFavs.filter((item) => {
@@ -118,12 +135,14 @@ const WikiBreeds = () => {
     }))
     setPagCount(1)
   }, [filter])
-  
-// FALTA PONER NO HAY ELEMENTOS QUE COINCIDAN CON TÚ BÚSQUEDA Y CONTROLAR PAGCOUNT Y QUE CUANDO SE HAGA UN FILTRO NOS MANDE A LA PAGCOUNT 1
+
 
   return (
     <>
       <h1>WikiBreeds</h1>
+      {
+        notRegistered && <p>You have to be registered to save your facts in favourites!</p>
+      }
       <select name='breed' onChange={ handleChange }>
         <option value="">Breed</option>
         {

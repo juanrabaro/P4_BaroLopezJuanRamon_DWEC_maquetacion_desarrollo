@@ -12,10 +12,12 @@ const SigninForm = () => {
   // para el contador cuando no es correcta la información
   const hideMessage = useRef(null)
   // mensaje cuando no es correcta la información
-  const [message, setMessage] = useState("Correo y/o contraseña no válidos")
+  const [message, setMessage] = useState("Email and/or password are incorrect!")
   // controlar si los datos del formulario están correctos o no
   const [incorrectForm, setIncorrectForm] = useState(false)
   const navigate = useNavigate()
+  // if the form has some information enable the sign in button
+  const [validData, setValidData] = useState(false)
 
 
   useEffect(() => {
@@ -39,6 +41,12 @@ const SigninForm = () => {
   }
 
 
+  useEffect(() => {
+    (formUser.email && formUser.pwd) ? setValidData(true) : setValidData(false)
+  }, [formUser])
+  
+
+
   function signIn(e) {
     e.preventDefault()
     
@@ -47,6 +55,7 @@ const SigninForm = () => {
     })
 
     userSigned.length ? (setUser(true), localStorage.setItem("userLogged", true ), navigate("/")) : setIncorrectForm(true)
+    localStorage.setItem("userLoggedData", JSON.stringify(formUser))
 
     if (hideMessage.current) {
       clearTimeout(hideMessage.current)
@@ -64,7 +73,7 @@ const SigninForm = () => {
         <label>Sign In</label>
         <input name='email' type="text" placeholder='gmail' onChange={ handleChange }/>
         <input name='pwd' type="text" placeholder='password' onChange={ handleChange }/>
-        <button onClick={ signIn }>Sign in</button>
+        <button disabled={ !validData } onClick={ signIn }>Sign in</button>
         {
           incorrectForm && (<p>{ message }</p>)
         }
