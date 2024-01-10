@@ -14,7 +14,7 @@ const UserProvider = ({ children }) => {
   if (user && !JSON.parse(localStorage.getItem("userLogged"))) {
     setUser(false)
   }
-
+  
 
   return (
     <UserContext.Provider value={ {user, setUser} }>

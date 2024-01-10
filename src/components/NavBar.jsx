@@ -17,11 +17,12 @@ const NavBar = () => {
         {
           user && <Link to="/favourites">Favourites</Link>
         }
+        <Link to="/contact">Contact</Link>
         {
           !user && (
             <>
               <Link to="/signin">Sign In</Link>
-              <Link to="/login">Log in</Link>
+              <Link to="/register">Register</Link>
             </>
           )
         }

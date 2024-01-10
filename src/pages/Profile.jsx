@@ -1,12 +1,19 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/userContext'
 import LogoutButton from '../components/LogoutButton'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
 
   const { user, setUser } = useContext(UserContext)
   const [dataUser, setDataUser] = useState(localStorage.getItem("userLoggedData"))
+  const navigate = useNavigate()
 
+
+  useEffect(() => {
+    !user && navigate("/")
+  }, [])
+  
 
   return (
     <>

@@ -10,10 +10,11 @@ import { loaderBreeds } from "../loaders"
 import Breed from "../pages/Breed"
 import { loaderBreed } from "../loaders"
 import Favourites from "../pages/Favourites"
+import RegisterPage from "../pages/RegisterPage"
 import SignInPage from "../pages/SignInPage"
-import LogInPage from "../pages/LogInPage"
 import LayoutPrivate from "../layouts/LayoutPrivate"
 import LayoutRoot from "../layouts/LayoutRoot"
+import ContactPage from "../pages/ContactPage"
 
 export const router = createBrowserRouter([
   {
@@ -49,12 +50,16 @@ export const router = createBrowserRouter([
         element: <Favourites />,
       },
       {
+        path: "/contact",
+        element: <ContactPage />,
+      },
+      {
         path: "/signin",
         element: <SignInPage />,
       },
       {
-        path: "/login",
-        element: <LogInPage />,
+        path: "/register",
+        element: <RegisterPage />,
       },
       {
         path:"/profile",

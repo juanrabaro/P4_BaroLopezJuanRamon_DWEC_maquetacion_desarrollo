@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
-import LoginForm from '../components/LoginForm'
-import SigninForm from '../components/SigninForm'
 import { UserContext } from '../context/userContext'
 import RandomFact from '../components/RandomFact'
+import SigninForm from '../components/SigninForm'
+import RegisterForm from '../components/RegisterForm'
 
 const Home = () => {
 
@@ -18,7 +18,7 @@ const Home = () => {
       {
         !user && (
           <>
-            <LoginForm />
+            <RegisterForm />
             <SigninForm />
           </>
         )

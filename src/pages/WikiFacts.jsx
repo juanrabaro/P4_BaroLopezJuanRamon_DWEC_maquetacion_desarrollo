@@ -29,12 +29,30 @@ const WikiFacts = () => {
   // control if the user is logged for addFavourites
   const [notRegistered, setNotRegistered] = useState(false)
   const hideMessage = useRef(null)
+
+  const [showButton, setShowButton] = useState(false)
+  const showPos = 200
   
 
   // initial useEffect bring the breeds in favs and setLoading false(not working)
   useEffect(() => {
     setListFavs(bringFavs("factsFavs"))
+    
+    const handleScroll = () => {
+      const scrollPos = document.documentElement.scrollTop
+      
+      scrollPos > showPos ?
+      setShowButton(true)
+      :
+      setShowButton(false)
+    }
+    window.addEventListener('scroll', handleScroll)
   }, [])
+
+
+  function upPage() {
+    document.documentElement.scrollTop = 0
+  }
 
 
   function addFavourite(id) {
@@ -70,45 +88,42 @@ const WikiFacts = () => {
   
   
   return (
-    <>
+    <main className='main-wiki-facts'>
+      {
+        showButton && <a onClick={ upPage } className='main-wiki-facts__up-page'>⬆️</a>
+      }
       <h1>WikiFacts</h1>
       {
         notRegistered && <h3>You have to be registered to save your facts in favourites!</h3>
       }
 
       <FilterFacts setFilteredList={ setFilteredList } filter={ filter } setFilter={ setFilter } factsList={ factsList } />
-      <section className='sections'>
-        <section className='sections__left-side'>
-          <p>left side</p>
-        </section>
-        <section className='sections__section-facts'>
-          {
-            filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
-              return (
-              <div key={ item.id }>
-                <p id={ item.id }>
-                  { item.fact }
-                </p>
-                {
-                  (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
-                  <button onClick={ () => deleteFavourite(item) }>Delete from favourites🛑</button> 
-                  :
-                  <button onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
-                }
-                <Link to={`/facts/${item.id+1}`}>View Fact</Link>
-              </div>
-              )
-            })
-          }
-        </section>
-        <section className='sections__right-side'>
-          <p>right side</p>
-        </section>
+      
+      <section className='sections__section-facts'>
+        {
+          filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
+            return (
+            <div key={ item.id }>
+              <p id={ item.id }>
+                { item.fact }
+              </p>
+              {
+                (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
+                <button onClick={ () => deleteFavourite(item) }>Delete from favourites🛑</button> 
+                :
+                <button onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
+              }
+              <Link to={`/facts/${item.id+1}`}>View Fact</Link>
+            </div>
+            )
+          })
+        }
       </section>
+
 
       <PaginationCount filter={ filter } filteredListLength={ filteredList.length } pagCount={ pagCount } setPagCount={ setPagCount }/>
     
-    </>
+    </main>
   )
 }
 

@@ -24,9 +24,9 @@ const LayoutRoot = () => {
   return (
     <>
       <NavBar />
-      <main>
-        <Outlet />
-      </main>
+      {/*<main>*/}
+      <Outlet />
+      {/*</main>*/}
       <Footer />
     </>
   )

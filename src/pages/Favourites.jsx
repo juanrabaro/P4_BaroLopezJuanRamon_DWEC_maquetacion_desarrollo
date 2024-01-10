@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { bringFavs } from '../localStorage/localStorage'
 import FavouriteFacts from '../components/FavouriteFacts'
 import FavouriteBreeds from '../components/FavouriteBreeds'
+import { UserContext } from '../context/userContext'
+import { useNavigate } from 'react-router-dom'
 
 const Favourites = () => {
 
+  const { user, setUser } = useContext(UserContext)
+  const navigate = useNavigate()
   // Needed to change between facts and breeds
   const [factOrBreed, setFactOrBreed] = useState("fact")
+
+
+  useEffect(() => {
+    !user && navigate("/")
+  }, [])
+  
+
 
   // change the content based on the button you click
   function handleChange(e) {
