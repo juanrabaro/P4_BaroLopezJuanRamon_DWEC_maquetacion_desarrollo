@@ -102,7 +102,7 @@ const WikiBreeds = () => {
     <>
       <h1>WikiBreeds</h1>
       {
-        notRegistered && <p>You have to be registered to save your facts in favourites!</p>
+        notRegistered && <h3>You have to be registered to save your facts in favourites!</h3>
       }
       <FilterBreeds filter={ filter } setFilter={ setFilter } breeds={ breeds } breedsList={ breedsList } setPagCount={ setPagCount } setFilteredList={ setFilteredList } />
 

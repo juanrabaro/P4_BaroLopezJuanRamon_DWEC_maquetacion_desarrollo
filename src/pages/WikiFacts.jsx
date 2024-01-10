@@ -77,7 +77,7 @@ const WikiFacts = () => {
     <>
       <h1>WikiFacts</h1>
       {
-        notRegistered && <p>You have to be registered to save your facts in favourites!</p>
+        notRegistered && <h3>You have to be registered to save your facts in favourites!</h3>
       }
 
       <FilterFacts filteredListLength={ filteredList.length } setFilteredList={ setFilteredList } filter={ filter } setFilter={ setFilter } factsList={ factsList } />
