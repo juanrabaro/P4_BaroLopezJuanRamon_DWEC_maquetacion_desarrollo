@@ -1,10 +1,14 @@
 @import "./assets/scss/base/_reset.scss";
 @import "./assets/scss/base/_typo.scss";
 
+@import "./assets/scss/utilities/_functions.scss";
+@import "./assets/scss/utilities/_variables.scss";
+
 //@import "./assets/scss/main.scss";
 @import "./assets/scss/layout/_header.scss";
 @import "./assets/scss/layout/_footer.scss";
 
+@import "./assets/scss/views/_home.scss";
 @import "./assets/scss/views/_wikiFacts.scss";
 @import "./assets/scss/views/_wikiBreeds.scss";
 @import "./assets/scss/views/_favourites.scss";

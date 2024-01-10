@@ -12,7 +12,8 @@ const Home = () => {
 
   return (
     <>
-      <h1>Home</h1>
+      <h1>CAT FACTS</h1>
+      <img className='home-image' src="/public/img/imagenPrincipal.png" alt="main image" />
       <RandomFact/>
       {
         !user && (

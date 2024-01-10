@@ -26,9 +26,6 @@ const WikiBreeds = () => {
   // state for the actual page of the pagination
   var [pagCount, setPagCount] = useState(1)
   
-  // loading message while the data is not ready(not working)
-  const [loading, setLoading] = useState(true)
-  
   // control if the user is logged for addFavourites
   const [notRegistered, setNotRegistered] = useState(false)
   const hideMessage = useRef(null)
@@ -45,7 +42,6 @@ const WikiBreeds = () => {
   
   // initial useEffect bring the breeds in favs and setLoading false(not working)
   useEffect(() => {
-    setLoading(false)
     setListFavs(bringFavs("breedsFavs"))
   }, [])
 
@@ -60,22 +56,6 @@ const WikiBreeds = () => {
       const newFav = newBreedList[0]
       setListFavs([...listFavs, newFav])
       uploadFav([...listFavs, newFav], "breedsFavs")
-      
-      /*
-      const newListFavs = JSON.parse(localStorage.getItem("breedsFavs")) || []
-      const userFavs = newListFavs.map((item) => {
-        if ( item.email === emailUserLogger ) {
-          console.log(item.favs)
-          return item.favs
-        }
-      })
-      console.log(userFavs)
-      const newDataFavs = {
-        email: emailUserLogger, favs: [...userFavs, newFav]
-      }
-      uploadFav([...newListFavs, newDataFavs], "breedsFavs")
-      setListFavs([...newListFavs, newFav])
-      */
       return
     }
 
@@ -107,9 +87,6 @@ const WikiBreeds = () => {
       <FilterBreeds filter={ filter } setFilter={ setFilter } breeds={ breeds } breedsList={ breedsList } setPagCount={ setPagCount } setFilteredList={ setFilteredList } />
 
       <section className='section-breeds'>
-        {
-          loading && <p>Loading...</p>
-        }
         {
           !filteredList.length ? <p>There is no result for your specifications</p> :
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {

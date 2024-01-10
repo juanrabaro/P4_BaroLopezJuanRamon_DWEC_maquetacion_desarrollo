@@ -22,7 +22,6 @@ const RandomFact = () => {
 
   return (
     <>
-      <h1>IMAGEN CON BOTÓN</h1>
       <button onClick={ randomFactGenerator }>Random Fact</button>
       {
         loading ? 
