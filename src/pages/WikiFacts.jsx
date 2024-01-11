@@ -31,7 +31,7 @@ const WikiFacts = () => {
   const hideMessage = useRef(null)
 
   const [showButton, setShowButton] = useState(false)
-  const showPos = 200
+  const showPos = 400
   
 
   // initial useEffect bring the breeds in favs and setLoading false(not working)

@@ -21,7 +21,7 @@ export function bringFavs(factOrBreed) {
 
 
 // NEW LOCALSTORAGE
-export function bringUserLoggedData() {
+export function loadUserLoggedData() {
   // bring the email of the user currently logged
   const userLoggedEmail = JSON.parse(localStorage.getItem("userLoggedEmail")) || ""
 
@@ -34,5 +34,27 @@ export function bringUserLoggedData() {
   })
 
   return userData
+}
+
+export function uploadNewUsersData(newUserObj) {
+  // bring all the information about all users
+  // maybe this should be a separated function
+  const allUsersData = JSON.parse(localStorage.getItem("usersData")) || []
+
+  if ( !allUsersData.length ) {
+    // just upload the new data user because localStorage is empty
+    const newUsersData = allUsersData.push(newUserObj)
+    localStorage.setItem("usersData", newUsersData)
+    return
+  }
+  // localStorage is not empty
+  // list of all users and the newUserData was sustituted
+  const newAllUsersData = allUsersData.map((userObj) => {
+    if ( newUserObj.email === userObj.email ) {
+      userObj = newUserObj
+      return
+    }
+  })
+  localStorage.setItem("usersData", newAllUsersData)
 }
 
