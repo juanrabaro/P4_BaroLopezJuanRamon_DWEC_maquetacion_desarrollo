@@ -64,19 +64,25 @@ const SigninForm = () => {
       } else {
         setMessage("Email and/or password are incorrect!")
         setIncorrectForm(true)
+        if (hideMessage.current) {
+          clearTimeout(hideMessage.current)
+        }
+        hideMessage.current = setTimeout(() => {
+          setMessage("")
+          setIncorrectForm(false)
+        }, 2000)
       }
+    } else {
+      setMessage("This email is not registered!")
+      setIncorrectForm(true)
+      if (hideMessage.current) {
+        clearTimeout(hideMessage.current)
+      }
+      hideMessage.current = setTimeout(() => {
+        setMessage("")
+        setIncorrectForm(false)
+      }, 2000)
     }
-    setMessage("This email is not registered!")
-    setIncorrectForm(true)
-    
-    if (hideMessage.current) {
-      clearTimeout(hideMessage.current)
-    }
-    hideMessage.current = setTimeout(() => {
-      setMessage("")
-      setIncorrectForm(false)
-    }, 2000)
-
   }
 
   

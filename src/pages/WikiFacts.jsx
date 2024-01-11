@@ -89,9 +89,11 @@ const WikiFacts = () => {
   
   return (
     <main className='main-wiki-facts'>
+      
       {
         showButton && <a onClick={ upPage } className='main-wiki-facts__up-page'>⬆️</a>
       }
+
       <h1>WikiFacts</h1>
       {
         notRegistered && <h3>You have to be registered to save your facts in favourites!</h3>
@@ -99,7 +101,7 @@ const WikiFacts = () => {
 
       <FilterFacts setFilteredList={ setFilteredList } filter={ filter } setFilter={ setFilter } factsList={ factsList } />
       
-      <section className='sections__section-facts'>
+      <section className='main-wiki-facts__section-facts'>
         {
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
             return (

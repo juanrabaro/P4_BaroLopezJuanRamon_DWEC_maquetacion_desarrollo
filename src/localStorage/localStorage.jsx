@@ -33,8 +33,9 @@ export function loadUserLoggedData() {
     return userObj.email === userLoggedEmail
   })
 
-  return userData
+  return userData[0] // object with the data of the user logged
 }
+
 
 export function uploadNewUsersData(newUserObj) {
   // bring all the information about all users
@@ -47,19 +48,24 @@ export function uploadNewUsersData(newUserObj) {
     localStorage.setItem("usersData", JSON.stringify(allUsersData))
     return
   }
-  // localStorage is not empty
-  // list of all users and the newUserData was sustituted
-  allUsersData.forEach((userObj) => {
-    if ( newUserObj.email === userObj.email) {
-      if ( JSON.stringify(newUserObj) !== JSON.stringify(userObj) ) {
-        userObj = newUserObj
-        return
-      }
-      return
+
+  // checking if the user exist
+  const existingUserIndex = allUsersData.findIndex(
+    (userObj) => userObj.email === newUserObj.email
+  )
+
+  // the user exist
+  if (existingUserIndex !== -1) {
+    if ( JSON.stringify(newUserObj) !== JSON.stringify(allUsersData[existingUserIndex])) {
+      // refresh the userObj because there is at least one change
+      allUsersData[existingUserIndex] = newUserObj
+      localStorage.setItem("usersData", JSON.stringify(allUsersData))
     }
+  } else {
+    // the user doesn't exist
     allUsersData.push(newUserObj)
     localStorage.setItem("usersData", JSON.stringify(allUsersData))
-  })
-  //localStorage.setItem("usersData", JSON.stringify(newAllUsersData))
+  }
+
 }
 

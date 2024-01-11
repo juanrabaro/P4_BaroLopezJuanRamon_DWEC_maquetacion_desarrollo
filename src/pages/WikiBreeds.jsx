@@ -20,6 +20,9 @@ const WikiBreeds = () => {
   // list of breeds favourites
   const [listFavs, setListFavs] = useState([])
 
+  const [showButton, setShowButton] = useState(false)
+  const showPos = 400
+
   // email userLogged
   const [emailUserLogger, setEmailUserLogger] = useState(localStorage.getItem("userLoggedData")) || " "
   
@@ -43,7 +46,22 @@ const WikiBreeds = () => {
   // initial useEffect bring the breeds in favs and setLoading false(not working)
   useEffect(() => {
     setListFavs(bringFavs("breedsFavs"))
+
+    const handleScroll = () => {
+      const scrollPos = document.documentElement.scrollTop
+      
+      scrollPos > showPos ?
+      setShowButton(true)
+      :
+      setShowButton(false)
+    }
+    window.addEventListener('scroll', handleScroll)
   }, [])
+
+
+  function upPage() {
+    document.documentElement.scrollTop = 0
+  }
 
 
   function addFavourite(id) {
@@ -79,19 +97,24 @@ const WikiBreeds = () => {
 
 
   return (
-    <>
+    <main className='main-wiki-breeds'>
+
+      {
+        showButton && <a onClick={ upPage } className='main-wiki-breeds__up-page'>⬆️</a>
+      }
+
       <h1>WikiBreeds</h1>
       {
         notRegistered && <h3>You have to be registered to save your facts in favourites!</h3>
       }
       <FilterBreeds filter={ filter } setFilter={ setFilter } breeds={ breeds } breedsList={ breedsList } setPagCount={ setPagCount } setFilteredList={ setFilteredList } />
 
-      <section className='section-breeds'>
+      <section className='main-wiki-breeds__section-breeds'>
         {
           !filteredList.length ? <p>There is no result for your specifications</p> :
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
             return (
-            <div key={ item.id } id={ item.id }>
+              <div key={ item.id } id={ item.id }>
               <p>
                 Breed - { item.breed }
               </p>
@@ -120,7 +143,7 @@ const WikiBreeds = () => {
         }
       </section>
       <PaginationCount filter={ filter } filteredListLength={ filteredList.length } pagCount={ pagCount } setPagCount={ setPagCount }/>
-    </>
+    </main>
   )
 }
 

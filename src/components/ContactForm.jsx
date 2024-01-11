@@ -48,9 +48,9 @@ const ContactForm = () => {
   return (
     <form>
       <label>Your email</label>
-      <input type="email" name="email" onChange={ handleChange }/>
+      <input type="email" name="email" value={ form.email } onChange={ handleChange }/>
       <label>Your suggestion</label>
-      <input type="text" name="suggestion" onChange={ handleChange }/>
+      <input type="text" name="suggestion" value={ form.suggestion } onChange={ handleChange }/>
       <button disabled={ !validData } onClick={ submitForm }>Sign in</button>
       {
         showMessage && <p>{ message }</p>
