@@ -34,6 +34,10 @@ const RegisterForm = () => {
     username: "",
     age: 0,
     conditions: false,
+    favs: {
+      facts: [],
+      breeds: []
+    }
   })
 
 

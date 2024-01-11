@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
-import { bringFavs, uploadFav } from '../localStorage/localStorage'
+import { loadUserLoggedData, uploadFav, uploadNewUsersData } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 import PaginationCount from '../components/PaginationCount'
 import FilterFacts from '../components/FilterFacts'
@@ -24,7 +24,9 @@ const WikiFacts = () => {
   var [pagCount, setPagCount] = useState(1)
 
   // list of breeds favourites
-  const [listFavs, setListFavs] = useState([])
+  const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.facts || [])
+  const [userData, setUserData] = useState(loadUserLoggedData())
+  const isFirstRender = useRef(true)
 
   // control if the user is logged for addFavourites
   const [notRegistered, setNotRegistered] = useState(false)
@@ -32,12 +34,9 @@ const WikiFacts = () => {
 
   const [showButton, setShowButton] = useState(false)
   const showPos = 400
-  
 
-  // initial useEffect bring the breeds in favs and setLoading false(not working)
+
   useEffect(() => {
-    setListFavs(bringFavs("factsFavs"))
-    
     const handleScroll = () => {
       const scrollPos = document.documentElement.scrollTop
       
@@ -55,16 +54,34 @@ const WikiFacts = () => {
   }
 
 
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      uploadNewUsersData(userData)
+      setListFavs(userData.favs.facts)
+    } else {
+      isFirstRender.current = false
+    }
+  }, [userData])
+
+  
   function addFavourite(id) {
     // si el usuario está registrado puede guardar en favs
     if ( user ) {
       const newListFav = filteredList.filter((fact) => {
         return fact === factsList[id]
       })
-
+      
+      // fact selected
       const newFav = newListFav[0]
-      uploadFav([...listFavs, newFav], "factsFavs")
-      setListFavs([...listFavs, newFav])
+
+      setUserData({
+        ...userData,
+        favs: {
+          facts: [...listFavs, newFav],
+          breeds: userData.favs.breeds
+        }
+      })
+
       return
     }
 
@@ -77,6 +94,7 @@ const WikiFacts = () => {
       setNotRegistered(false)
     }, 2000)
   }
+
 
   function deleteFavourite(object) {
     const newListFav = listFavs.filter((item) => {
