@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { bringUsers, uploadUser } from '../localStorage/localStorage'
+import { loadUserLoggedData, uploadNewUsersData } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
 
 const RegisterForm = () => {
 
   // user dirá si está logeado
-  const { user, setUser } = useContext(UserContext)
+  const { user, setUser, userLoggedData, setUserLoggedData } = useContext(UserContext)
   // indica si hay error de validación
   const [validData, setValidData] = useState(false)
   // contenido del error de validación
@@ -25,12 +25,7 @@ const RegisterForm = () => {
 
   // lista todos usuarios
   // llenar lista usuarios con datos del localStorage
-  const [listUsers, setListUsers] = useState(bringUsers())
-
-  //useEffect(() => {
-  //  setListUsers(bringUsers())
-  //}, [])
-  
+  const [listUsers, setListUsers] = useState(JSON.parse(localStorage.getItem("usersData")) || [])
 
   // estado de los datos del usuario en tiempo real
   const [formUser, setFormUser] = useState({
@@ -79,7 +74,7 @@ const RegisterForm = () => {
     }
     if ( name === "age" ) {
       value < 1 ?
-      (setErrorMessage("The age can't be negative or 0"), setAgeValid(false))
+      (setErrorMessage("The age can't be negative or 0 or any other thing"), setAgeValid(false))
       :
       (setErrorMessage(""), setAgeValid(true))
     }
@@ -113,14 +108,8 @@ const RegisterForm = () => {
     
     // the user is not a rep user
     if ( !repUsers.length ) {
-      // actualiza lista de usuarios
-      setListUsers(prevListUsers => {
-        [...prevListUsers, formUser]
-      })
-      
-      // añade al localStorage la nueva lista de usuarios
-      uploadUser([...listUsers, formUser])
-      localStorage.setItem("userLoggedData", formUser.email)
+      uploadNewUsersData(formUser)
+      localStorage.setItem("userLoggedEmail", formUser.email)
 
       // usuario logeado activa layouts privados
       localStorage.setItem("userLogged", true)
@@ -137,6 +126,8 @@ const RegisterForm = () => {
       setRepUser(false)
     }, 2000)
   }
+
+  
   
 
 

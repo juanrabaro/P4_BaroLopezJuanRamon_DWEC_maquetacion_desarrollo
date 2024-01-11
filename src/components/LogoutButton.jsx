@@ -9,7 +9,7 @@ const LogoutButton = ({ setUser }) => {
   function logout() {
     setUser(false)
     localStorage.setItem("userLogged", false)
-    localStorage.setItem("userLoggedData", "")
+    localStorage.setItem("userLoggedEmail", "")
     navigate("/")
   }
 

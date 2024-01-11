@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { bringUsers } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
+import { loadUserLoggedData } from '../localStorage/localStorage'
 
 const SigninForm = () => {
   
@@ -12,7 +12,7 @@ const SigninForm = () => {
   // para el contador cuando no es correcta la información
   const hideMessage = useRef(null)
   // mensaje cuando no es correcta la información
-  const [message, setMessage] = useState("Email and/or password are incorrect!")
+  const [message, setMessage] = useState("")
   // controlar si los datos del formulario están correctos o no
   const [incorrectForm, setIncorrectForm] = useState(false)
   const navigate = useNavigate()
@@ -21,7 +21,7 @@ const SigninForm = () => {
 
 
   useEffect(() => {
-    setListUsers(bringUsers())
+    setListUsers(JSON.parse(localStorage.getItem("usersData")) || [])
   }, [])
 
 
@@ -50,17 +50,30 @@ const SigninForm = () => {
   function signIn(e) {
     e.preventDefault()
     
-    const userSigned = listUsers.filter((userObj) => {
-      return JSON.stringify(userObj) === JSON.stringify(formUser)
+    const userExist = listUsers.filter((userObj) => {
+      return userObj.email === formUser.email
     })
 
-    userSigned.length ? (setUser(true), localStorage.setItem("userLogged", true ), navigate("/")) : setIncorrectForm(true)
-    localStorage.setItem("userLoggedData", formUser.email)
-
+    console.log(userExist)
+    if ( userExist.length ) {
+      if ( userExist[0].pwd === formUser.pwd ) {
+        localStorage.setItem("userLogged", true)
+        localStorage.setItem("userLoggedEmail", formUser.email)
+        setUser(true)
+        navigate("/")
+      } else {
+        setMessage("Email and/or password are incorrect!")
+        setIncorrectForm(true)
+      }
+    }
+    setMessage("This email is not registered!")
+    setIncorrectForm(true)
+    
     if (hideMessage.current) {
       clearTimeout(hideMessage.current)
     }
     hideMessage.current = setTimeout(() => {
+      setMessage("")
       setIncorrectForm(false)
     }, 2000)
 
