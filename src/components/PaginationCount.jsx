@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react'
 
-const PaginationCount = ({ filter, filteredListLength, pagCount, setPagCount }) => {
+const PaginationCount = ({ filter, filteredListLength, pagCount, setPagCount, currentPage, setCurrentPage }) => {
 
 
   useEffect(() => {
     setPagCount(1)
+    setCurrentPage(1)
   }, [filter])
 
   // control the state pageCount
   function prevPag() {
-    pagCount > 1 && setPagCount(--pagCount)
+    var currentPageState = --pagCount
+    pagCount > 0 && (setCurrentPage(currentPageState), setPagCount(currentPageState))
     document.documentElement.scrollTop = 0
   }
   function nextPag() {
-    pagCount < Math.ceil(filteredListLength/20) && setPagCount(++pagCount)
+    var currentPageState = ++pagCount
+    pagCount < Math.ceil(filteredListLength/20) && (setCurrentPage(currentPageState), setPagCount(currentPageState))
     document.documentElement.scrollTop = 0
   }
 

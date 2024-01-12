@@ -138,7 +138,7 @@ const RegisterForm = () => {
   return (
     <>
       <form className='register-form' onSubmit={ register }>
-        <label>Register Form</label>
+        <h3>Register Form</h3>
         <label>Email</label>
         <input name='email' type="email" placeholder='Email' onChange={ handleChange }/>
         <label>Password</label>

@@ -22,10 +22,11 @@ const RandomFact = () => {
 
   return (
     <>
-      <button className='main-home__random-div__random-button' onClick={ randomFactGenerator }>Random Fact</button>
+      <button className='main-home__random-div__random-button' onClick={ randomFactGenerator }>Generate Random Fact</button>
       {
-        loading ? 
-        <p className='main-home__random-div__random-fact'>Loading...</p>
+        loading ?
+        <div className="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        //<p className='main-home__random-div__random-fact'>Loading...</p>
         : <p className='main-home__random-div__random-fact'>{ randomFact }</p>
 
       }

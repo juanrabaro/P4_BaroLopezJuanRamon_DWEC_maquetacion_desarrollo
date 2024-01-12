@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { Link, useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData, useLocation } from 'react-router-dom'
 import { loadUserLoggedData, uploadNewUsersData } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 import PaginationCount from '../components/PaginationCount'
@@ -17,9 +17,6 @@ const WikiBreeds = () => {
   // shown list with the filter applied(this list is the actual rendered all the time)
   const [filteredList, setFilteredList] = useState(breedsList)
   
-  // // list of breeds favourites
-  // const [listFavs, setListFavs] = useState([])
-  
   // list of brreds favourites
   const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.breeds)
   const [userData, setUserData] = useState(loadUserLoggedData())
@@ -32,7 +29,9 @@ const WikiBreeds = () => {
   
   // state for the actual page of the pagination
   var [pagCount, setPagCount] = useState(1)
-  
+  var [currentPage, setCurrentPage] = useState(1)
+  const location = useLocation()
+
   // control if the user is logged for addFavourites
   const [notRegistered, setNotRegistered] = useState(false)
   const hideMessage = useRef(null)
@@ -58,6 +57,8 @@ const WikiBreeds = () => {
       setShowButton(false)
     }
     window.addEventListener('scroll', handleScroll)
+
+    location.state >= 1 && (setPagCount(location.state), setCurrentPage(location.state))
   }, [])
 
 
@@ -160,13 +161,13 @@ const WikiBreeds = () => {
                 :
                 <button onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
               }
-              <Link to={`/breeds/${ item.id+1 }`}>View Breed</Link>
+              <Link to={`/breeds/${ item.id+1 }`} state={ currentPage } >View Breed</Link>
             </div>
             )
           })
         }
       </section>
-      <PaginationCount filter={ filter } filteredListLength={ filteredList.length } pagCount={ pagCount } setPagCount={ setPagCount }/>
+      <PaginationCount filter={ filter } filteredListLength={ filteredList.length } pagCount={ pagCount } setPagCount={ setPagCount } currentPage={ currentPage } setCurrentPage={ setCurrentPage }/>
     </main>
   )
 }
