@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
-import { bringFavs, loadUserLoggedData, uploadFav, uploadNewUsersData } from '../localStorage/localStorage'
+import { loadUserLoggedData, uploadNewUsersData } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 import PaginationCount from '../components/PaginationCount'
 import FilterBreeds from '../components/FilterBreeds'
@@ -21,7 +21,7 @@ const WikiBreeds = () => {
   // const [listFavs, setListFavs] = useState([])
   
   // list of brreds favourites
-  const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.breeds || [])
+  const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.breeds)
   const [userData, setUserData] = useState(loadUserLoggedData())
 
   const [showButton, setShowButton] = useState(false)

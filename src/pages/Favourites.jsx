@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { bringFavs } from '../localStorage/localStorage'
 import FavouriteFacts from '../components/FavouriteFacts'
 import FavouriteBreeds from '../components/FavouriteBreeds'
 import { UserContext } from '../context/userContext'

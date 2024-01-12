@@ -1,26 +1,4 @@
-// REFACTORIZAR MUY IMPORTANTE
-export function uploadUser(newUsers) {
-  localStorage.setItem("users", JSON.stringify(newUsers))
-}
 
-export function bringUsers() {
-  return JSON.parse(localStorage.getItem("users")) || []
-}
-
-
-
-export function uploadFav(newFav, factOrBreed) {
-  localStorage.setItem(factOrBreed, JSON.stringify(newFav))
-}
-
-export function bringFavs(factOrBreed) {
-  return JSON.parse(localStorage.getItem(factOrBreed)) || []
-}
-
-
-
-
-// NEW LOCALSTORAGE
 export function loadUserLoggedData() {
   // bring the email of the user currently logged
   const userLoggedEmail = localStorage.getItem("userLoggedEmail") || ""
@@ -32,8 +10,11 @@ export function loadUserLoggedData() {
   const userData = allUsersData.filter((userObj) => {
     return userObj.email === userLoggedEmail
   })
-
-  return userData[0] // object with the data of the user logged
+  
+  if ( userData.length ) {
+    return userData[0] // object with the data of the user logged
+  }
+  return { favs: { facts: [], breeds: [] } }
 }
 
 

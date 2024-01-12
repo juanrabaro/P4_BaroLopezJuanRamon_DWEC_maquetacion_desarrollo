@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
-import { loadUserLoggedData, uploadFav, uploadNewUsersData } from '../localStorage/localStorage'
+import { loadUserLoggedData, uploadNewUsersData } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 import PaginationCount from '../components/PaginationCount'
 import FilterFacts from '../components/FilterFacts'
@@ -24,7 +24,7 @@ const WikiFacts = () => {
   var [pagCount, setPagCount] = useState(1)
 
   // list of facts favourites
-  const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.facts || [])
+  const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.facts)
   const [userData, setUserData] = useState(loadUserLoggedData())
 
   // control if the user is logged for addFavourites
