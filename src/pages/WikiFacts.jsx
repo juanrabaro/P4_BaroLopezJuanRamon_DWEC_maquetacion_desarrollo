@@ -149,7 +149,7 @@ const WikiFacts = () => {
 
 
       <PaginationCount filter={ filter } filteredListLength={ filteredList.length } pagCount={ pagCount } setPagCount={ setPagCount } currentPage={ currentPage } setCurrentPage={ setCurrentPage }/>
-    
+
     </main>
   )
 }

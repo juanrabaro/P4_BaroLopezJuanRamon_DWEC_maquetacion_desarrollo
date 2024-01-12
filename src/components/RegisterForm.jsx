@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { loadUserLoggedData, uploadNewUsersData } from '../localStorage/localStorage'
+import { uploadNewUsersData } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -137,18 +137,28 @@ const RegisterForm = () => {
 
   return (
     <>
+      <h2>Register Form</h2>
       <form className='register-form' onSubmit={ register }>
-        <h3>Register Form</h3>
-        <label>Email</label>
-        <input name='email' type="email" placeholder='Email' onChange={ handleChange }/>
-        <label>Password</label>
-        <input name='pwd' type="password" placeholder='Password' onChange={ handleChange }/>
-        <label>Username</label>
-        <input name='username' type="text" placeholder='Username'  onChange={ handleChange }/>
-        <label>Age</label>
-        <input name='age' type="number" placeholder='Age'  onChange={ handleChange }/>
-        <label>Acept terms and conditions</label>
-        <input name="conditions" type="checkbox"  onChange={ handleChange }/>
+        <div className='register-form__inputs'>
+          <label>Email</label>
+          <input name='email' type="email" placeholder='Email' onChange={ handleChange }/>
+        </div>
+        <div className='register-form__inputs'>
+          <label>Password</label>
+          <input name='pwd' type="password" placeholder='Password' onChange={ handleChange }/>
+        </div>
+        <div className='register-form__inputs'>
+          <label>Username</label>
+          <input name='username' type="text" placeholder='Username'  onChange={ handleChange }/>
+        </div>
+        <div className='register-form__inputs'>
+          <label>Age</label>
+          <input name='age' type="number" placeholder='Age'  onChange={ handleChange }/>
+        </div>
+        <div className='register-form__inputs'>
+          <label>Acept terms and conditions</label>
+          <input name="conditions" type="checkbox"  onChange={ handleChange }/>
+        </div>
         {
           !validData && <div>{ errorMessage }</div>
         }
