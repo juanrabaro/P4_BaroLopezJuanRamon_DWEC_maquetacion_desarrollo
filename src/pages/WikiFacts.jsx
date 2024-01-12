@@ -23,7 +23,7 @@ const WikiFacts = () => {
   // state for the actual page of the pagination
   var [pagCount, setPagCount] = useState(1)
 
-  // list of breeds favourites
+  // list of facts favourites
   const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.facts || [])
   const [userData, setUserData] = useState(loadUserLoggedData())
   const isFirstRender = useRef(true)

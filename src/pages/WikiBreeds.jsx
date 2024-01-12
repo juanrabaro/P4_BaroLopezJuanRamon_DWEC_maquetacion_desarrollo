@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
-import { bringFavs, uploadFav } from '../localStorage/localStorage'
+import { bringFavs, loadUserLoggedData, uploadFav, uploadNewUsersData } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 import PaginationCount from '../components/PaginationCount'
 import FilterBreeds from '../components/FilterBreeds'
@@ -17,14 +17,19 @@ const WikiBreeds = () => {
   // shown list with the filter applied(this list is the actual rendered all the time)
   const [filteredList, setFilteredList] = useState(breedsList)
   
-  // list of breeds favourites
-  const [listFavs, setListFavs] = useState([])
+  // // list of breeds favourites
+  // const [listFavs, setListFavs] = useState([])
+  
+  // list of facts favourites
+  const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.breeds || [])
+  const [userData, setUserData] = useState(loadUserLoggedData())
+  const isFirstRender = useRef(true)
 
   const [showButton, setShowButton] = useState(false)
   const showPos = 400
 
   // email userLogged
-  const [emailUserLogger, setEmailUserLogger] = useState(localStorage.getItem("userLoggedData")) || " "
+  const [emailUserLogger, setEmailUserLogger] = useState(localStorage.getItem("userLoggedEmail")) || ""
   
   // state for the actual page of the pagination
   var [pagCount, setPagCount] = useState(1)
@@ -64,20 +69,38 @@ const WikiBreeds = () => {
   }
 
 
+  useEffect(() => {
+    if (!isFirstRender.current) {
+      uploadNewUsersData(userData)
+      setListFavs(userData.favs.breeds)
+    } else {
+      isFirstRender.current = false
+    }
+  }, [userData])
+
+  
   function addFavourite(id) {
-    // user is registered so save the data to localStorage
+    // si el usuario está registrado puede guardar en favs
     if ( user ) {
-      const newBreedList = breedsList.filter((breed) => {
+      const newListFav = filteredList.filter((breed) => {
         return breed === breedsList[id]
       })
       
-      const newFav = newBreedList[0]
-      setListFavs([...listFavs, newFav])
-      uploadFav([...listFavs, newFav], "breedsFavs")
+      // breed selected
+      const newFav = newListFav[0]
+
+      setUserData({
+        ...userData,
+        favs: {
+          facts: userData.favs.facts,
+          breeds: [...listFavs, newFav]
+        }
+      })
+
       return
     }
 
-    // not registered so enable for 2 sec the message
+    // si el usuario no está registrado no puede guardar en favs
     setNotRegistered(true)
     if (hideMessage.current) {
       clearTimeout(hideMessage.current)
