@@ -11,19 +11,21 @@ const Home = () => {
 
 
   return (
-    <>
+    <main className='main-home'>
       <h1>CAT FACTS</h1>
-      <img className='home-image' src="/public/img/imagenPrincipal.png" alt="main image" />
-      <RandomFact/>
-      {
-        !user && (
-          <>
-            <RegisterForm />
-            <SigninForm />
-          </>
-        )
-      }
-    </>
+      <img className='main-home__home-image' src="/public/img/imagenPrincipal.png" alt="main image" />
+      <div className='main-home__random-div'>
+        <RandomFact/>
+      </div>
+        {
+          !user && (
+            <>
+              <RegisterForm />
+              <SigninForm />
+            </>
+          )
+        }
+    </main>
   )
 }
 

@@ -1,3 +1,36 @@
-.home-image {
-  width: 400px;
+.main-home {
+  @include flex(column, center, center);
+
+  h1 {
+    color: rgb(118, 0, 99);
+    font-size: 40px;
+  }
+  &__home-image {
+    width: 800px;
+    margin: 0px, 5%, 0px, 5%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  }
+  &__random-div {
+    @include flex(column, center, center);
+    padding-top: 60px;
+    
+    &__random-button {
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      padding: 20px;
+      cursor: pointer;
+      background-color: $rosaOscuro;
+      border: 0;
+      border-radius: 20px;
+      font-size: 18px;
+      color: rgb(255, 209, 243);
+    }
+    &__random-button:hover {
+      background-color: $nuevoRosaClaro;
+    }
+    &__random-fact {
+      max-width: 50%;
+      min-height: 140px;
+      font-size: 22px;
+    }
+  }
 }

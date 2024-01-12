@@ -4,12 +4,15 @@
 @import "./assets/scss/utilities/_functions.scss";
 @import "./assets/scss/utilities/_variables.scss";
 
-//@import "./assets/scss/main.scss";
 @import "./assets/scss/layout/_header.scss";
 @import "./assets/scss/layout/_footer.scss";
 
+// VIEWS
 @import "./assets/scss/views/_home.scss";
 @import "./assets/scss/views/_wikiFacts.scss";
 @import "./assets/scss/views/_wikiBreeds.scss";
 @import "./assets/scss/views/_favourites.scss";
-@import "./assets/scss/views/_login.scss";
+@import "./assets/scss/views/_registerPage.scss";
+
+// COMPONENTS
+@import "./assets/scss/components/_register.scss";
