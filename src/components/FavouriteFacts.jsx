@@ -1,24 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { bringFavs, loadUserLoggedData, uploadFav } from '../localStorage/localStorage'
+import React, { useState } from 'react'
+import { loadUserLoggedData, uploadNewUsersData } from '../localStorage/localStorage'
 
 const FavouriteFacts = () => {
 
   // list of facts favourites
-  const [factsFav, setFactsFav] = useState([])  
-  
+  const [factsFav, setFactsFav] = useState(loadUserLoggedData().favs.facts)
+  const [userData, setUserData] = useState(loadUserLoggedData())
 
-  // Bring the data of facts favourites in localStorage
-  useEffect(() => {
-    setFactsFav(loadUserLoggedData().favs.facts)
-  }, [])
-  
 
   function deleteFavourite(object) {
-    const newBreedList = factsFav.filter((item) => {
+    const newListFavs = factsFav.filter((item) => {
       return item.id !== object.id
     })
-    setFactsFav(newBreedList)
-    uploadFav(newBreedList, "factsFavs")
+
+    const newUserData = {
+      ...userData,
+      favs: {
+        facts: newListFavs,
+        breeds: userData.favs.breeds
+      }
+    }
+
+    setUserData(newUserData)
+    uploadNewUsersData(newUserData)
+    setFactsFav(newListFavs)
   }
 
 

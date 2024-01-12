@@ -10,9 +10,11 @@ const PaginationCount = ({ filter, filteredListLength, pagCount, setPagCount }) 
   // control the state pageCount
   function prevPag() {
     pagCount > 1 && setPagCount(--pagCount)
+    document.documentElement.scrollTop = 0
   }
   function nextPag() {
     pagCount < Math.ceil(filteredListLength/20) && setPagCount(++pagCount)
+    document.documentElement.scrollTop = 0
   }
 
 

@@ -26,7 +26,6 @@ const WikiFacts = () => {
   // list of facts favourites
   const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.facts || [])
   const [userData, setUserData] = useState(loadUserLoggedData())
-  const isFirstRender = useRef(true)
 
   // control if the user is logged for addFavourites
   const [notRegistered, setNotRegistered] = useState(false)
@@ -53,16 +52,6 @@ const WikiFacts = () => {
     document.documentElement.scrollTop = 0
   }
 
-
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      uploadNewUsersData(userData)
-      setListFavs(userData.favs.facts)
-    } else {
-      isFirstRender.current = false
-    }
-  }, [userData])
-
   
   function addFavourite(id) {
     // si el usuario está registrado puede guardar en favs
@@ -74,13 +63,17 @@ const WikiFacts = () => {
       // fact selected
       const newFav = newListFav[0]
 
-      setUserData({
+      const newUserData = {
         ...userData,
         favs: {
           facts: [...listFavs, newFav],
           breeds: userData.favs.breeds
         }
-      })
+      }
+
+      setUserData(newUserData)
+      uploadNewUsersData(newUserData)
+      setListFavs([...listFavs, newFav])
 
       return
     }
@@ -97,11 +90,21 @@ const WikiFacts = () => {
 
 
   function deleteFavourite(object) {
-    const newListFav = listFavs.filter((item) => {
+    const newListFavs = listFavs.filter((item) => {
       return item.id !== object.id
-    })    
-    setListFavs(newListFav)
-    uploadFav(newListFav, "factsFavs")
+    })
+
+    const newUserData = {
+      ...userData,
+      favs: {
+        facts: newListFavs,
+        breeds: userData.favs.breeds
+      }
+    }
+
+    setUserData(newUserData)
+    uploadNewUsersData(newUserData)
+    setListFavs(newListFavs)
   }
   
   

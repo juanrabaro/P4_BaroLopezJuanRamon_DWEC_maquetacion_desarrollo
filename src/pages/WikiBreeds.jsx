@@ -20,10 +20,9 @@ const WikiBreeds = () => {
   // // list of breeds favourites
   // const [listFavs, setListFavs] = useState([])
   
-  // list of facts favourites
+  // list of brreds favourites
   const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.breeds || [])
   const [userData, setUserData] = useState(loadUserLoggedData())
-  const isFirstRender = useRef(true)
 
   const [showButton, setShowButton] = useState(false)
   const showPos = 400
@@ -50,8 +49,6 @@ const WikiBreeds = () => {
   
   // initial useEffect bring the breeds in favs and setLoading false(not working)
   useEffect(() => {
-    setListFavs(bringFavs("breedsFavs"))
-
     const handleScroll = () => {
       const scrollPos = document.documentElement.scrollTop
       
@@ -68,16 +65,6 @@ const WikiBreeds = () => {
     document.documentElement.scrollTop = 0
   }
 
-
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      uploadNewUsersData(userData)
-      setListFavs(userData.favs.breeds)
-    } else {
-      isFirstRender.current = false
-    }
-  }, [userData])
-
   
   function addFavourite(id) {
     // si el usuario está registrado puede guardar en favs
@@ -89,13 +76,17 @@ const WikiBreeds = () => {
       // breed selected
       const newFav = newListFav[0]
 
-      setUserData({
+      const newUserData = {
         ...userData,
         favs: {
           facts: userData.favs.facts,
           breeds: [...listFavs, newFav]
         }
-      })
+      }
+
+      setUserData(newUserData)
+      uploadNewUsersData(newUserData)
+      setListFavs([...listFavs, newFav])
 
       return
     }
@@ -111,11 +102,21 @@ const WikiBreeds = () => {
   }
 
   function deleteFavourite(object) {
-    const newBreedList = listFavs.filter((item) => {
+    const newListFavs = listFavs.filter((item) => {
       return item.id !== object.id
     })
-    setListFavs(newBreedList)
-    uploadFav(newBreedList, "breedsFavs")
+    
+    const newUserData = {
+      ...userData,
+      favs: {
+        facts: userData.favs.facts,
+        breeds: newListFavs
+      }
+    }
+
+    setUserData(newUserData)
+    uploadNewUsersData(newUserData)
+    setListFavs(newListFavs)
   }
 
 
