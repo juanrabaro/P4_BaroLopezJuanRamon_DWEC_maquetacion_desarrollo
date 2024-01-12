@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { bringFavs, uploadFav } from '../localStorage/localStorage'
+import { bringFavs, loadUserLoggedData, uploadFav } from '../localStorage/localStorage'
 
 const FavouriteFacts = () => {
 
@@ -9,7 +9,7 @@ const FavouriteFacts = () => {
 
   // Bring the data of facts favourites in localStorage
   useEffect(() => {
-    setFactsFav(bringFavs("factsFavs"))
+    setFactsFav(loadUserLoggedData().favs.facts)
   }, [])
   
 
