@@ -136,7 +136,7 @@ const RegisterForm = () => {
 
 
   return (
-    <>
+    <div className='main-home__forms__register-form-container'>
       <h2>Register Form</h2>
       <form className='register-form' onSubmit={ register }>
         <div className='register-form__inputs'>
@@ -155,19 +155,19 @@ const RegisterForm = () => {
           <label>Age</label>
           <input name='age' type="number" placeholder='Age'  onChange={ handleChange }/>
         </div>
-        <div className='register-form__inputs'>
-          <label>Acept terms and conditions</label>
+        <div className='register-form__input-checkbox'>
           <input name="conditions" type="checkbox"  onChange={ handleChange }/>
+          <label>Acept terms and conditions</label>
         </div>
         {
-          !validData && <div>{ errorMessage }</div>
+          !validData && <div className='register-form__error-message'>{ errorMessage }</div>
         }
         <button disabled={ !validData }>Register</button>
         {
-          repUser && <p>{ repUserMessage }</p>
+          repUser && <p className='register-form__error-message'>{ repUserMessage }</p>
         }
       </form>
-    </>
+    </div>
   )
 }
 

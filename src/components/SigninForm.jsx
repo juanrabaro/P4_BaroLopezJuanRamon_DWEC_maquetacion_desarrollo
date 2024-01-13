@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
-import { loadUserLoggedData } from '../localStorage/localStorage'
 
 const SigninForm = () => {
   
@@ -87,17 +86,23 @@ const SigninForm = () => {
 
   
   return (
-    <>
-      <form>
-        <label>Sign In</label>
-        <input name='email' type="text" placeholder='gmail' onChange={ handleChange }/>
-        <input name='pwd' type="text" placeholder='password' onChange={ handleChange }/>
+    <div className='main-home__forms__signin-form-container'>
+      <h2>Sign In</h2>
+      <form className='signin-form'>
+        <div className='signin-form__inputs'>
+        <label>Email</label>
+        <input name='email' type="text" placeholder='Email' onChange={ handleChange }/>
+      </div>
+      <div className='signin-form__inputs'>
+        <label>Password</label>
+        <input name='pwd' type="text" placeholder='Password' onChange={ handleChange }/>
+      </div>
         <button disabled={ !validData } onClick={ signIn }>Sign in</button>
         {
-          incorrectForm && (<p>{ message }</p>)
+          incorrectForm && (<p className='signin-form__error-message'>{ message }</p>)
         }
       </form>
-    </>
+    </div>
   )
 }
 

@@ -1,19 +1,26 @@
 .main-home {
   @include flex(column, center, center);
+  background-color: $backgroundColor;
 
   h1 {
-    color: rgb(118, 0, 99);
-    font-size: 40px;
+    //color: rgb(118, 0, 99);
+    //color: rgb(255, 159, 239);
+    color: rgb(232, 135, 227);
+    font-size: 50px;
+    padding: 15px 0 35px 0;
   }
   &__home-image {
     width: 800px;
     margin: 0px, 5%, 0px, 5%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-    border-radius: 20px
+    border-radius: 20px;
   }
   &__random-div {
-    @include flex(column, center, center);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-top: 74px;
+
     
     &__random-button {
       box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -23,22 +30,27 @@
       background-color: $rosaOscuro;
       border: 0;
       border-radius: 20px;
-      font-size: 18px;
-      color: rgb(255, 209, 243);
+      font-size: 24px;
+      //color: rgb(255, 209, 243);
+      background-color: rgb(58, 183, 0);
+      color: rgb(72, 12, 63);
     }
     &__random-button:hover {
-      background-color: $nuevoRosaClaro;
+      //background-color: $nuevoRosaClaro;
+      //background-color: #c352b9;
+      background-color: rgb(114, 210, 69);
     }
     &__random-fact {
       max-width: 40%;
-      max-height: 140px;
+      
       font-size: 22px;
       text-align: center;
+      color: rgb(252, 223, 254);
     }
     .lds-default {
       margin-top: 30px;
       max-width: 50%;
-      min-height: 140px;
+      height: 140px;
       display: inline-block;
       position: relative;
       width: 80px;
@@ -48,7 +60,7 @@
       position: absolute;
       width: 6px;
       height: 6px;
-      background: #fff;
+      background: #ffd8fb;
       border-radius: 50%;
       animation: lds-default 1.2s linear infinite;
     }
@@ -121,5 +133,12 @@
       }
     }
         
+  }
+
+  &__forms {
+    width: 70%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    @include flex(row, center, flex-start, 10%);
   }
 }
