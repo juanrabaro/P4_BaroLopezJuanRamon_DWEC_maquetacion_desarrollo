@@ -3,10 +3,9 @@ import ContactForm from '../components/ContactForm'
 
 const ContactPage = () => {
   return (
-    <>
-      <h1>Contact Page</h1>
-      <ContactForm></ContactForm>
-    </>
+    <main className='main-contact'>
+      <ContactForm />
+    </main>
   )
 }
 

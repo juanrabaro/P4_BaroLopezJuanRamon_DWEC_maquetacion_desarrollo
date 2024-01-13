@@ -17,10 +17,9 @@ const RegisterPage = () => {
   
   
   return (
-    <>
-      <h1>RegisterPage</h1>
+    <main className='main-register'>
       <RegisterForm />
-    </>
+    </main>
   )
 }
 

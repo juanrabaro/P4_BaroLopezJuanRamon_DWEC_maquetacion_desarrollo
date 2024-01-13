@@ -18,15 +18,20 @@ const Profile = () => {
   
 
   return (
-    <>
-      <h1>Profile</h1>
-      
-      <h4>Hello user: { dataUser.username }</h4>
-      <h4>Email: { dataUser.email }</h4>
-      <h4>Age: { dataUser.email }</h4>
+    <main className='main-profile'>
 
-      <LogoutButton setUser={ setUser }/>
-    </>
+      <section className='main-profile__container'>
+        <h1>Profile</h1>
+        
+        <div className='main-profile__container__data'>
+          <h4>Hello user { dataUser.username }!</h4>
+          <h4>Email: { dataUser.email }</h4>
+          <h4>Age: { dataUser.age } years</h4>
+        </div>
+
+        <LogoutButton setUser={ setUser }/>
+      </section>
+    </main>
   )
 }
 

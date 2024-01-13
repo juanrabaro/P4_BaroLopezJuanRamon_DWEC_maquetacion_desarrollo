@@ -1,0 +1,76 @@
+.main-contact {
+  @include flex(column, center, center);
+  background-color: $backgroundColor;
+  padding: 50px 0 50px 0;
+
+  
+  &__contact-form-container {
+    width: 40%;
+    background-color: rgb(116, 25, 111);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    padding: 35px;
+    padding-right: 70px;
+    padding-left: 70px;
+    
+    h2 {
+      text-align: center;
+      margin: 0;
+      color: rgb(246, 183, 243);
+      font-size: 30px;
+    }
+    
+    &__contact-form {
+      @include flex(column, center, flex-start, 15px);
+      padding-top: 20px;
+      padding-bottom: 10px;
+
+      &__inputs {
+        @include flex(column, center, flex-start);
+        padding-top: 5px;
+        width: 100%;
+        color: rgb(252, 223, 254);
+        
+        input {
+          border-radius: 8px;
+          width: 100%;
+          padding: 5px;
+          border: 0px;
+          margin-top: 5px;
+        }
+        textarea {
+          height: 60px;
+          width: 100%;
+          border-radius: 8px;
+          padding: 5px;
+          border: 0px;
+          margin-top: 5px;
+          resize: none;
+        }
+      }
+
+      &__message {
+        padding: 20px 0 20px 0;
+        color: rgb(252, 223, 254);
+        margin: 0 auto;
+        font-size: 20px;
+      }
+  
+      button {
+        margin: 0 auto;
+        margin-top: 10px;
+        padding: 11px 41px 11px 41px;
+        border-radius: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        cursor: pointer;
+        background-color: $rosaOscuro;
+        border: 0;
+        font-size: 18px;
+        color: rgb(255, 209, 243);
+      }  
+      button:hover {
+        background-color: $nuevoRosaClaro;
+      }
+    }
+  }
+}

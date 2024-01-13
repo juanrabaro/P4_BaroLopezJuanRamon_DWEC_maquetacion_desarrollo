@@ -119,13 +119,13 @@ const WikiFacts = () => {
         showButton && <a onClick={ upPage } className='main-wiki-facts__up-page'>⬆️</a>
       }
 
-      <h1>WikiFacts</h1>
-      {
-        notRegistered && <h3>You have to be registered to save your facts in favourites!</h3>
-      }
+      <h1>Wiki Facts</h1>
       <div className='main-wiki-facts__filter-container'>
         <FilterFacts setFilteredList={ setFilteredList } filter={ filter } setFilter={ setFilter } factsList={ factsList } />
       </div>
+      {
+        notRegistered && <h3 className='main-wiki-facts__message'>You have to be registered to save your facts in favourites!</h3>
+      }
       
       <section className='main-wiki-facts__section-facts'>
         {

@@ -46,16 +46,23 @@ const ContactForm = () => {
 
 
   return (
-    <form>
-      <label>Your email</label>
-      <input type="email" name="email" value={ form.email } onChange={ handleChange }/>
-      <label>Your suggestion</label>
-      <input type="text" name="suggestion" value={ form.suggestion } onChange={ handleChange }/>
-      <button disabled={ !validData } onClick={ submitForm }>Sign in</button>
-      {
-        showMessage && <p>{ message }</p>
-      }
-    </form>
+    <section className='main-contact__contact-form-container'>
+      <h2>Contact</h2>
+      <form className='main-contact__contact-form-container__contact-form'>
+        <div className='main-contact__contact-form-container__contact-form__inputs'>
+          <label>Your email</label>
+          <input type="email" name="email" value={ form.email } onChange={ handleChange }/>
+        </div>
+        <div className='main-contact__contact-form-container__contact-form__inputs'>
+          <label>Your suggestion</label>
+          <textarea type="text" name="suggestion" value={ form.suggestion } onChange={ handleChange }/>
+        </div>
+        <button disabled={ !validData } onClick={ submitForm }>Sign in</button>
+        {
+          showMessage && <p className='main-contact__contact-form-container__contact-form__message'>{ message }</p>
+        }
+      </form>
+    </section>
   )
 }
 

@@ -137,7 +137,7 @@ const RegisterForm = () => {
 
   return (
     <div className='main-home__forms__register-form-container'>
-      <h2>Register Form</h2>
+      <h2>Register</h2>
       <form className='register-form' onSubmit={ register }>
         <div className='register-form__inputs'>
           <label>Email</label>

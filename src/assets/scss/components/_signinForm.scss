@@ -12,6 +12,7 @@
     text-align: center;
     margin: 0;
     color: rgb(246, 183, 243);
+    font-size: 30px;
   }
   
   .signin-form {
@@ -31,12 +32,17 @@
       
       input {
         width: 100%;
-        border-radius: 4px;
+        border-radius: 8px;
+        padding: 5px;
+        border: 0px;
+        margin-top: 5px;
       }
     }
     &__error-message {
       padding: 20px 0 20px 0;
       color: rgb(252, 223, 254);
+      margin: 0 auto;
+      font-size: 20px;
     }
 
     button {
