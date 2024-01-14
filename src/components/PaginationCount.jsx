@@ -22,7 +22,7 @@ const PaginationCount = ({ filter, filteredListLength, pagCount, setPagCount, cu
   return (
     <section className='section-contador-paginacion'>
         <button onClick={ prevPag }>Anterior</button>
-        <p>{ pagCount }</p>
+        <p><strong>{ pagCount }</strong></p>
         <button onClick={ nextPag }>Siguiente</button>
       </section>
   )

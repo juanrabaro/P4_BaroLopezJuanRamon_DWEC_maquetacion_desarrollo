@@ -10,13 +10,22 @@
 
   .main-wiki-facts__up-page {
     position: fixed;
-    cursor: pointer;
     bottom: 200px;
-    right: 1%;
-    font-size: 32px;
+    right: 2.5%;
+    font-size: 35px;
     width: 45px;
     height: 45px;
-    animation-duration: 2s;
+    background-color: rgb(62, 177, 45);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    color: rgb(252, 223, 254);
+    cursor: pointer;
+    border: 0;
+    border-radius: 7px;
+    text-align: center;
+    padding: 3px 5px 8px 5px;
+  }
+  .main-wiki-facts__up-page:hover {
+    background-color: rgb(42, 139, 27);
   }
 
   h1 {
@@ -54,25 +63,73 @@
     width: 80%;
     display: grid;
     grid-template-columns: 22% 22% 22% 22%;
-    row-gap: 10px;
+    row-gap: 30px;
     column-gap: 4%;
     padding: 20px 10% 30px 10%;
 
-    div {
-      border: 2px solid rgb(92, 92, 92);
-      border-radius: 10px;
-      text-align: justify;
-      padding: 5px;
+    .container {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
+      background-color: rgb(118, 39, 114);
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      border: 0;
+      border-radius: 10px;
+      text-align: justify;
+      padding: 25px;
+      font-size: 17px;
 
-      button {
-        background: none;
-        border: 0;
-        cursor: pointer;
-        font-size: 15px;
+      .container-buttons {
+        @include flex(column, center, center, 12px);
+
+        .delete-button {
+          border: 0;
+          border-radius: 5px;
+          background-color: rgb(210, 42, 42);
+          padding: 8px 18px 8px 18px;
+          font-size: 15px;
+          cursor: pointer;
+          color: rgb(255, 207, 248);
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        }
+        .delete-button:hover {
+          background-color: rgb(115, 0, 0);
+        }
+  
+        .add-button {
+          border: 0;
+          border-radius: 5px;
+          background-color: rgba(220, 220, 47, 0.973);
+          padding: 8px 18px 8px 18px;
+          font-size: 15px;
+          cursor: pointer;
+          color: rgb(79, 34, 72);
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        }
+        .add-button:hover {
+          background-color: rgb(174, 174, 69);  
+        }
+  
+        .view {
+          text-decoration: none;
+          color: rgb(66, 8, 60);
+          background-color: rgb(168, 39, 168);
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+          padding: 8px 12px 8px 12px;
+          border: 0;
+          border-radius: 10px;
+          font-size: 17px;
+        }
+        .view:hover {
+          background-color: rgb(212, 111, 212);
+        }
+      }
+
+      p {
+        color: #eec5f0;
+        margin-top: 0;
+        margin-bottom: 15px;
       }
     }
   }
@@ -83,5 +140,25 @@
     justify-content: center;
     align-items: center;
     gap: 15px;
+    margin-top: 20px;
+
+    button {
+      background-color: rgb(62, 177, 45);
+      color: rgb(62, 9, 67);
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      border: 0;
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 12px;
+      font-size: 18px;
+    }
+    button:hover {
+      background-color: rgb(42, 139, 27);
+    }
+
+    p {
+      font-size: x-large;
+      color: rgb(223, 182, 227);
+    }
   }
 }

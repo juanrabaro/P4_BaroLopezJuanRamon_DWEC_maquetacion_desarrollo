@@ -29,12 +29,12 @@ const FavouriteBreeds = () => {
   
   return (
     <>
-      <h2>Breeds favoritos</h2>
+      <h1>Breeds Favourites</h1>
       {
         !breedsFav.length ? <p>No hay breeds guardados en favoritos</p> :
         breedsFav?.map((item, index) => {
           return (
-            <div key={ index }>
+            <div className='main-favourites__section-favourites__breeds-favs' key={ index }>
               <div>
                 <p>
                   Breed - { item.breed }
@@ -52,7 +52,7 @@ const FavouriteBreeds = () => {
                   Pattern - { item.pattern }
                 </p>
               </div>
-              <button onClick={ () => deleteFavourite(item) }>Delete from favourites🛑</button>
+              <button onClick={ () => deleteFavourite(item) }>Delete from favourites</button>
             </div>
           )
         })

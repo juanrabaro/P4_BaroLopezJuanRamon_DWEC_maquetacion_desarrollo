@@ -1,22 +1,100 @@
-.h1-favourites {
-  text-align: center;
-}
+.main-favourites {
+  @include flex(column, flex-start, center);
+  background-color: $backgroundColor;
+  min-height: 80vh;
 
-.section-buttons-favourites {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 25px;
-
-  button {
-    padding: 20px;
-    border: 2px solid black;
-    border-radius: 7px;
-    font-size: larger;
-    width: 150px;
+  &__h1-favourites {
+    text-align: center;
+    margin-top: 0;
+    padding: 20px 0 30px 0;
+    color: rgb(246, 183, 243);
+    font-size: 38px;
   }
-}
-
-.section-favourites {
   
+  &__section-buttons-favourites {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 35px;
+    
+    button {
+      background-color: rgb(116, 25, 111);
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      color: rgb(252, 223, 254);
+      cursor: pointer;
+      padding: 20px;
+      border: 0;
+      border-radius: 7px;
+      font-size: larger;
+      width: 150px;
+    }
+    button:hover {
+      background-color: $nuevoRosaClaro;
+    }
+  }
+  
+  &__section-favourites {
+    @include flex(column, center, center, 20px);
+    width: 45%;
+
+    h1 {
+      color: rgb(246, 183, 243);
+      font-size: 30px;
+    }
+    
+    p {
+      color: rgb(252, 223, 254);
+      font-size: 17px;
+    }
+    
+    &__facts-favs {
+      @include flex(column, center, center);
+      background-color: rgb(112, 28, 108);
+      border: 0;
+      border-radius: 20px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      width: 100%;
+      padding: 0px 10% 10px 10%;
+      height: 200px;
+
+      button {
+        border: 0;
+        border-radius: 5px;
+        background-color: rgb(210, 42, 42);
+        padding: 8px 18px 8px 18px;
+        font-size: 15px;
+        cursor: pointer;
+        color: rgb(255, 207, 248);
+      }
+      button:hover {
+        background-color: rgb(115, 0, 0);
+      }
+    }
+
+
+    &__breeds-favs {
+      @include flex(column, center, center);
+      background-color: rgb(112, 28, 108);
+      border: 0;
+      border-radius: 20px;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      width: 45%;
+      padding: 0px 10% 20px 10%;
+      height: 250px;
+
+      button {
+        border: 0;
+        border-radius: 5px;
+        background-color: rgb(210, 42, 42);
+        padding: 8px 18px 8px 18px;
+        font-size: 15px;
+        cursor: pointer;
+        color: rgb(255, 207, 248);
+      }
+      button:hover {
+        background-color: rgb(115, 0, 0);
+      }
+    }
+  }
 }

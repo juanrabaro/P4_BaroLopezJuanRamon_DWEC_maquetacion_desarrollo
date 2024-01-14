@@ -1,0 +1,39 @@
+.main-fact {
+  @include flex(column, flex-start, center);
+  background-color: $backgroundColor;
+  min-height: 64vh;
+  
+  &__container {
+    @include flex(column, flex-start, center);
+    width: 45%;
+    padding-top: 100px;
+    
+    &__button-container {
+      @include flex(row, flex-start, center);
+      width: 100%;
+      
+      &__button-back {
+        background-color: rgb(116, 25, 111);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        color: rgb(252, 223, 254);
+        cursor: pointer;
+        text-decoration: none;
+        padding: 13px;
+        border: 0;
+        border-radius: 7px;
+        font-size: larger;
+        width: 120px;
+        text-align: center;
+      }
+      &__button-back:hover {
+        background-color: $nuevoRosaClaro;
+      }
+    }
+    
+    &__fact {
+      color: white;
+      margin-top: 30px;
+      font-size: larger;
+    }
+  }
+}

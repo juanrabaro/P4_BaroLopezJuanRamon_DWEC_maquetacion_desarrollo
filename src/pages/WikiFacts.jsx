@@ -116,7 +116,7 @@ const WikiFacts = () => {
     <main className='main-wiki-facts'>
       
       {
-        showButton && <a onClick={ upPage } className='main-wiki-facts__up-page'>⬆️</a>
+        showButton && <a onClick={ upPage } className='main-wiki-facts__up-page'>⬆</a>
       }
 
       <h1>Wiki Facts</h1>
@@ -131,17 +131,19 @@ const WikiFacts = () => {
         {
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
             return (
-            <div key={ item.id }>
+            <div className='container' key={ item.id }>
               <p id={ item.id }>
                 { item.fact }
               </p>
-              {
-                (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
-                <button onClick={ () => deleteFavourite(item) }>Delete from favourites🛑</button> 
-                :
-                <button onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
-              }
-              <Link to={`/facts/${ item.id+1 }`} state={ currentPage } >View Fact</Link>
+              <div className='container-buttons'>
+                {
+                  (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
+                  <button className='delete-button' onClick={ () => deleteFavourite(item) }>Delete from favourites</button> 
+                  :
+                  <button className='add-button' onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
+                }
+                <Link className='view' to={`/facts/${ item.id+1 }`} state={ currentPage } >View Fact</Link>
+              </div>
             </div>
             )
           })

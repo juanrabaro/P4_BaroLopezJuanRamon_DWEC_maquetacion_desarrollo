@@ -72,9 +72,9 @@ const FilterBreeds = ({ filter, setFilter, breeds, breedsList, setPagCount, setF
 
 
   return (
-    <>
+    <section className='main-wiki-breed__filters'>
       <select name='breed' onChange={ handleChange }>
-        <option value="">Breed</option>
+        <option value="">Breed Deffault</option>
         {
           posiblyBreedList.map((item, index) => {
             return <option key={ index } value={ item }>{ item }</option>
@@ -82,7 +82,7 @@ const FilterBreeds = ({ filter, setFilter, breeds, breedsList, setPagCount, setF
         }
       </select>
       <select name='country' onChange={ handleChange }>
-        <option value="">Country</option>
+        <option value="">Country Deffault</option>
         {
           posiblyCountryList.map((item, index) => {
             return <option key={ index } value={ item }>{ item }</option>
@@ -90,7 +90,7 @@ const FilterBreeds = ({ filter, setFilter, breeds, breedsList, setPagCount, setF
         }
       </select>
       <select name='origin' onChange={ handleChange }>
-        <option value="">Origin</option>
+        <option value="">Origin Deffault</option>
         {
           posiblyOriginList.map((item, index) => {
             return <option key={ index } value={ item }>{ item }</option>
@@ -98,7 +98,7 @@ const FilterBreeds = ({ filter, setFilter, breeds, breedsList, setPagCount, setF
         }
       </select>
       <select name='coat' onChange={ handleChange }>
-        <option value="">Coat</option>
+        <option value="">Coat Deffault</option>
         {
           posiblyCoatList.map((item, index) => {
             return <option key={ index } value={ item }>{ item }</option>
@@ -106,14 +106,14 @@ const FilterBreeds = ({ filter, setFilter, breeds, breedsList, setPagCount, setF
         }
       </select>
       <select name='pattern' onChange={ handleChange }>
-        <option value="">Pattern</option>
+        <option value="">Pattern Deffault</option>
         {
           posiblyPatternList.map((item, index) => {
             return <option key={ index } value={ item }>{ item }</option>
           })
         }
       </select>
-    </>
+    </section>
   )
 }
 

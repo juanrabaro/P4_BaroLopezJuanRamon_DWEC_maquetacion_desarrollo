@@ -125,43 +125,49 @@ const WikiBreeds = () => {
     <main className='main-wiki-breeds'>
 
       {
-        showButton && <a onClick={ upPage } className='main-wiki-breeds__up-page'>⬆️</a>
+        showButton && <a onClick={ upPage } className='main-wiki-breeds__up-page'>⬆</a>
       }
 
       <h1>WikiBreeds</h1>
+      
+      <FilterBreeds filter={ filter } setFilter={ setFilter } breeds={ breeds } breedsList={ breedsList } setPagCount={ setPagCount } setFilteredList={ setFilteredList } />
+      
       {
         notRegistered && <h3>You have to be registered to save your facts in favourites!</h3>
       }
-      <FilterBreeds filter={ filter } setFilter={ setFilter } breeds={ breeds } breedsList={ breedsList } setPagCount={ setPagCount } setFilteredList={ setFilteredList } />
 
       <section className='main-wiki-breeds__section-breeds'>
         {
           !filteredList.length ? <p>There is no result for your specifications</p> :
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
             return (
-              <div key={ item.id } id={ item.id }>
-              <p>
-                Breed - { item.breed }
-              </p>
-              <p>
-                Country - { item.country }
-              </p>
-              <p>
-                Origin - { item.origin }
-              </p>
-              <p>
-                Coat - { item.coat }
-              </p>
-              <p>
-                Pattern - { item.pattern }
-              </p>
-              {
-                (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
-                <button onClick={ () => deleteFavourite(item) }>Delete from favourites🛑</button>
-                :
-                <button onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
-              }
-              <Link to={`/breeds/${ item.id+1 }`} state={ currentPage } >View Breed</Link>
+              <div  className='main-wiki-breeds__section-breeds__container' key={ item.id } id={ item.id }>
+                <div className='main-wiki-breeds__section-breeds__container__data-breed'>
+                  <p>
+                    Breed - { item.breed }
+                  </p>
+                  <p>
+                    Country - { item.country }
+                  </p>
+                  <p>
+                    Origin - { item.origin }
+                  </p>
+                  <p>
+                    Coat - { item.coat }
+                  </p>
+                  <p>
+                    Pattern - { item.pattern }
+                  </p>
+                </div>
+                <div className='container-buttons'>
+                  {
+                    (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
+                    <button className='delete-button' onClick={ () => deleteFavourite(item) }>Delete from favourites</button>
+                    :
+                    <button className='add-button' onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
+                  }
+                  <Link className='view' to={`/breeds/${ item.id+1 }`} state={ currentPage } >View Breed</Link>
+                </div>
             </div>
             )
           })

@@ -24,9 +24,9 @@ const Profile = () => {
         <h1>Profile</h1>
         
         <div className='main-profile__container__data'>
-          <h4>Hello user { dataUser.username }!</h4>
-          <h4>Email: { dataUser.email }</h4>
-          <h4>Age: { dataUser.age } years</h4>
+          <h4>Hello user <strong>{ dataUser.username }</strong>!</h4>
+          <h4>Email: <strong>{ dataUser.email }</strong></h4>
+          <h4>Age: <strong>{ dataUser.age } years</strong></h4>
         </div>
 
         <LogoutButton setUser={ setUser }/>

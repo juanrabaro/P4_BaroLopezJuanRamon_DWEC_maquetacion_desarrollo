@@ -8,10 +8,14 @@ const Fact = () => {
   const prevPage = location.state
   
   return (
-    <>
-      <Link to="/facts" state={ prevPage }>Replace</Link>
-      <div>{ fact.fact }</div>
-    </>
+    <main className='main-fact'>
+      <section className='main-fact__container'>
+        <div className='main-fact__container__button-container'>
+          <Link className='main-fact__container__button-container__button-back' to="/facts" state={ prevPage }>⬅ Wiki Facts</Link>
+        </div>
+        <p className='main-fact__container__fact'>{ fact.fact }</p>
+      </section>
+    </main>
   )
 }
 

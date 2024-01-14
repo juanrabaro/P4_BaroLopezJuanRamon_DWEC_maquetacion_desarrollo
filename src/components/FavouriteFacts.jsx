@@ -29,14 +29,14 @@ const FavouriteFacts = () => {
 
   return (
     <>
-      <h2>Facts favoritos</h2>
+      <h1>Facts Favourites</h1>
       {
         !factsFav.length ? <p>No hay facts guardados en favoritos</p> :
         factsFav?.map((item, index) => {
           return (
-            <div key={ index }>
+            <div className='main-favourites__section-favourites__facts-favs' key={ index }>
               <p>{ item.fact }</p>
-              <button onClick={ () => deleteFavourite(item) }>Delete from favourites🛑</button>
+              <button onClick={ () => deleteFavourite(item) }>Delete from favourites</button>
             </div>
           )
         })

@@ -31,13 +31,13 @@ const Favourites = () => {
 
 
   return (
-    <>
-      <h1 className='h1-favourites'>Favourites</h1>
-      <section className='section-buttons-favourites'>
+    <main className='main-favourites'>
+      <h1 className='main-favourites__h1-favourites'>Favourites</h1>
+      <section className='main-favourites__section-buttons-favourites'>
         <button id='button-facts' onClick={ handleChange }>Facts</button>
         <button id='button-breeds' onClick={ handleChange }>Breeds</button>
       </section>
-      <section className='section-favourites'>
+      <section className='main-favourites__section-favourites'>
         {
           factOrBreed === "fact" ? (
             <>
@@ -51,7 +51,7 @@ const Favourites = () => {
           )
         }
       </section>
-    </>
+    </main>
   )
 }
 
