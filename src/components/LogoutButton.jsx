@@ -14,6 +14,7 @@ const LogoutButton = ({ setUser }) => {
   }
 
 
+
   return (
     <button className='logout-button' onClick={ logout }>Logout</button>
   )

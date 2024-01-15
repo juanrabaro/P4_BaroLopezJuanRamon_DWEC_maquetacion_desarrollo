@@ -4,35 +4,32 @@ import { loadUserLoggedData, uploadNewUsersData } from '../localStorage/localSto
 import { UserContext } from '../context/userContext'
 import PaginationCount from '../components/PaginationCount'
 import FilterBreeds from '../components/FilterBreeds'
+import BreedCard from '../components/BreedCard'
 
 const WikiBreeds = () => {
 
-  // if the user is logged is true else is false
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
 
   // all the breeds from the API
   const { breeds } = useLoaderData()
   const [breedsList, setBreedsList] = useState(breeds)
   
-  // shown list with the filter applied(this list is the actual rendered all the time)
   const [filteredList, setFilteredList] = useState(breedsList)
   
-  // list of brreds favourites
   const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.breeds)
   const [userData, setUserData] = useState(loadUserLoggedData())
 
   const [showButton, setShowButton] = useState(false)
   const showPos = 400
 
-  // email userLogged
+  // email user logged
   const [emailUserLogger, setEmailUserLogger] = useState(localStorage.getItem("userLoggedEmail")) || ""
   
-  // state for the actual page of the pagination
   var [pagCount, setPagCount] = useState(1)
   var [currentPage, setCurrentPage] = useState(1)
   const location = useLocation()
 
-  // control if the user is logged for addFavourites
   const [notRegistered, setNotRegistered] = useState(false)
   const hideMessage = useRef(null)
 
@@ -46,7 +43,8 @@ const WikiBreeds = () => {
   })
 
   
-  // initial useEffect bring the breeds in favs and setLoading false(not working)
+
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos = document.documentElement.scrollTop
@@ -62,13 +60,17 @@ const WikiBreeds = () => {
   }, [])
 
 
+
+
   function upPage() {
     document.documentElement.scrollTop = 0
   }
 
+
+
   
   function addFavourite(id) {
-    // si el usuario está registrado puede guardar en favs
+    // user logged
     if ( user ) {
       const newListFav = filteredList.filter((breed) => {
         return breed === breedsList[id]
@@ -92,7 +94,7 @@ const WikiBreeds = () => {
       return
     }
 
-    // si el usuario no está registrado no puede guardar en favs
+    // user is not logged
     setNotRegistered(true)
     if (hideMessage.current) {
       clearTimeout(hideMessage.current)
@@ -101,6 +103,9 @@ const WikiBreeds = () => {
       setNotRegistered(false)
     }, 2000)
   }
+
+
+
 
   function deleteFavourite(object) {
     const newListFavs = listFavs.filter((item) => {
@@ -121,6 +126,9 @@ const WikiBreeds = () => {
   }
 
 
+
+
+
   return (
     <main className='main-wiki-breeds'>
 
@@ -139,37 +147,8 @@ const WikiBreeds = () => {
       <section className='main-wiki-breeds__section-breeds'>
         {
           !filteredList.length ? <p>There is no result for your specifications</p> :
-          filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
-            return (
-              <div  className='main-wiki-breeds__section-breeds__container' key={ item.id } id={ item.id }>
-                <div className='main-wiki-breeds__section-breeds__container__data-breed'>
-                  <p>
-                    Breed - { item.breed }
-                  </p>
-                  <p>
-                    Country - { item.country }
-                  </p>
-                  <p>
-                    Origin - { item.origin }
-                  </p>
-                  <p>
-                    Coat - { item.coat }
-                  </p>
-                  <p>
-                    Pattern - { item.pattern }
-                  </p>
-                </div>
-                <div className='container-buttons'>
-                  {
-                    (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
-                    <button className='delete-button' onClick={ () => deleteFavourite(item) }>Delete from favourites</button>
-                    :
-                    <button className='add-button' onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
-                  }
-                  <Link className='view' to={`/breeds/${ item.id+1 }`} state={ currentPage } >View Breed</Link>
-                </div>
-            </div>
-            )
+          filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
+            return <BreedCard key={index} item={ item } listFavs={ listFavs } user={ user } currentPage={ currentPage } deleteFavourite={ deleteFavourite } addFavourite={ addFavourite } />
           })
         }
       </section>

@@ -6,6 +6,7 @@ const RandomFact = () => {
   const [loading, setLoading] = useState(null)
   
 
+  // generate a random fact
   async function randomFactGenerator() {
     try {
       setLoading(true)
@@ -26,9 +27,7 @@ const RandomFact = () => {
       {
         loading ?
         <div className="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-        //<p className='main-home__random-div__random-fact'>Loading...</p>
         : <p className='main-home__random-div__random-fact'>{ randomFact }</p>
-
       }
     </>
   )

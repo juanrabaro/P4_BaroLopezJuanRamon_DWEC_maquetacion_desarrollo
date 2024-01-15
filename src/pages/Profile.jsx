@@ -6,15 +6,22 @@ import { loadUserLoggedData } from '../localStorage/localStorage'
 
 const Profile = () => {
 
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
+
+  // obj with the data of the current logged user
   const [dataUser, setDataUser] = useState(loadUserLoggedData())
   const navigate = useNavigate()
 
-  console.log(dataUser);
+
+
 
   useEffect(() => {
     !user && navigate("/")
   }, [])
+  
+
+
   
 
   return (

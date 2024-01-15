@@ -12,5 +12,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </UserProvider>
   </React.StrictMode>,
 )
-
-// prueba commit desde torre

@@ -3,9 +3,10 @@ import { loadUserLoggedData, uploadNewUsersData } from '../localStorage/localSto
 
 const FavouriteBreeds = () => {
 
-  // list of facts favourites
+  // list of breeds favourites
   const [breedsFav, setBreedsFav] = useState(loadUserLoggedData().favs.breeds)
   const [userData, setUserData] = useState(loadUserLoggedData())
+
 
 
   function deleteFavourite(object) {
@@ -25,6 +26,8 @@ const FavouriteBreeds = () => {
     uploadNewUsersData(newUserData)
     setBreedsFav(newListFavs)
   }
+
+
 
   
   return (

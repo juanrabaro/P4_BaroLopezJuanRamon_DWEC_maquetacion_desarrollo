@@ -5,15 +5,17 @@ import { useNavigate } from 'react-router-dom'
 
 const SignInPage = () => {
 
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
   const navigate = useNavigate()
 
-  
+
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("userLogged"))) {
       navigate("/")
     }
   }, [])
+
 
 
   return (

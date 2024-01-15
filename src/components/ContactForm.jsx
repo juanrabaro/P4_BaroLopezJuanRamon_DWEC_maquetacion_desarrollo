@@ -5,17 +5,22 @@ const ContactForm = () => {
   const [message, setMessage] = useState("Form data sended!")
   const [showMessage, setShowMessage] = useState(false)
   const hideMessage = useRef(null)
-  // if the form has some information enable the sign in button
   const [validData, setValidData] = useState(false)
+  
+  // form data
   const [form, setForm] = useState({
     email: "",
     suggestion: "",
   })
 
 
+
+
   useEffect(() => {
     (form.email && form.suggestion) ? setValidData(true) : setValidData(false)
   }, [form])
+
+
 
   
   function handleChange(e) {
@@ -25,6 +30,8 @@ const ContactForm = () => {
       [name]: value
     })
   }
+
+
 
 
   function submitForm(e) {
@@ -45,6 +52,9 @@ const ContactForm = () => {
   }
 
 
+
+
+  
   return (
     <section className='main-contact__contact-form-container'>
       <h2>Contact</h2>

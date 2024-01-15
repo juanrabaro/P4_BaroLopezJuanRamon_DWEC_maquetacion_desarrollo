@@ -6,16 +6,20 @@ import { useNavigate } from 'react-router-dom'
 
 const Favourites = () => {
 
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
   const navigate = useNavigate()
-  // Needed to change between facts and breeds
+
+  // change between facts and breeds
   const [factOrBreed, setFactOrBreed] = useState("fact")
+
 
 
   useEffect(() => {
     !user && navigate("/")
   }, [])
   
+
 
 
   // change the content based on the button you click
@@ -30,6 +34,9 @@ const Favourites = () => {
   }
 
 
+
+
+  
   return (
     <main className='main-favourites'>
       <h1 className='main-favourites__h1-favourites'>Favourites</h1>

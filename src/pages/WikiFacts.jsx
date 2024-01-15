@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { Link, useLoaderData, useLocation } from 'react-router-dom'
+import { useLoaderData, useLocation } from 'react-router-dom'
 import { loadUserLoggedData, uploadNewUsersData } from '../localStorage/localStorage'
 import { UserContext } from '../context/userContext'
 import PaginationCount from '../components/PaginationCount'
 import FilterFacts from '../components/FilterFacts'
+import FactCard from '../components/FactCard'
 
 const WikiFacts = () => {
 
@@ -13,29 +14,26 @@ const WikiFacts = () => {
   // all the facts from the API
   const { facts } = useLoaderData()
   const [factsList, setFactsList] = useState(facts)
-  
-  // shown list with the filter applied(this list is the actual rendered all the time)
+
+  const [filter, setFilter] = useState("")
   const [filteredList, setFilteredList] = useState(factsList)
   
-  // filter for the search filter
-  const [filter, setFilter] = useState("")
 
-  // state for the actual page of the pagination
   var [pagCount, setPagCount] = useState(1)
   var [currentPage, setCurrentPage] = useState(1)
   const location = useLocation()
   
-  // list of facts favourites
   const [listFavs, setListFavs] = useState(loadUserLoggedData().favs.facts)
   const [userData, setUserData] = useState(loadUserLoggedData())
   
-  // control if the user is logged for addFavourites
   const [notRegistered, setNotRegistered] = useState(false)
   const hideMessage = useRef(null)
   
   const [showButton, setShowButton] = useState(false)
   const showPos = 400
   
+
+
   
   useEffect(() => {
     const handleScroll = () => {
@@ -51,14 +49,18 @@ const WikiFacts = () => {
     location.state >= 1 && (setPagCount(location.state), setCurrentPage(location.state))
   }, [])
   
+
+
   
   function upPage() {
     document.documentElement.scrollTop = 0
   }
 
+
+
   
   function addFavourite(id) {
-    // si el usuario está registrado puede guardar en favs
+    // user is logged
     if ( user ) {
       const newListFav = filteredList.filter((fact) => {
         return fact === factsList[id]
@@ -82,7 +84,7 @@ const WikiFacts = () => {
       return
     }
 
-    // si el usuario no está registrado no puede guardar en favs
+    // user is not logged
     setNotRegistered(true)
     if (hideMessage.current) {
       clearTimeout(hideMessage.current)
@@ -91,6 +93,8 @@ const WikiFacts = () => {
       setNotRegistered(false)
     }, 2000)
   }
+
+
 
 
   function deleteFavourite(object) {
@@ -111,6 +115,9 @@ const WikiFacts = () => {
     setListFavs(newListFavs)
   }
   
+
+
+
   
   return (
     <main className='main-wiki-facts'>
@@ -129,23 +136,8 @@ const WikiFacts = () => {
       
       <section className='main-wiki-facts__section-facts'>
         {
-          filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item) => {
-            return (
-            <div className='container' key={ item.id }>
-              <p id={ item.id }>
-                { item.fact }
-              </p>
-              <div className='container-buttons'>
-                {
-                  (listFavs.some(obj => JSON.stringify(obj) === JSON.stringify(item)) && user) ?
-                  <button className='delete-button' onClick={ () => deleteFavourite(item) }>Delete from favourites</button> 
-                  :
-                  <button className='add-button' onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
-                }
-                <Link className='view' to={`/facts/${ item.id+1 }`} state={ currentPage } >View Fact</Link>
-              </div>
-            </div>
-            )
+          filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
+            return <FactCard key={index} item={ item } listFavs={ listFavs } user={ user } currentPage={ currentPage } deleteFavourite={ deleteFavourite } addFavourite={ addFavourite }/>
           })
         }
       </section>

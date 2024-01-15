@@ -8,6 +8,7 @@ const FavouriteFacts = () => {
   const [userData, setUserData] = useState(loadUserLoggedData())
 
 
+
   function deleteFavourite(object) {
     const newListFavs = factsFav.filter((item) => {
       return item.id !== object.id
@@ -26,6 +27,8 @@ const FavouriteFacts = () => {
     setFactsFav(newListFavs)
   }
 
+
+  
 
   return (
     <>

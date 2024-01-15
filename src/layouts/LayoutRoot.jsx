@@ -6,27 +6,24 @@ import { UserContext } from '../context/userContext'
 
 const LayoutRoot = () => {
 
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
-
-  // Cuando actualizo en Profile no da tiempo a setear el user a true por lo cual
-  // nos manda a Home pero al final acaba poniendo user a true entonces todo funciona
-  // Intento de solución ⬇️
+  
+  
   useEffect(() => {
-    async function getInitialUserLogged() {
-      const userLogged = await JSON.parse(localStorage.getItem("userLogged")) || false
-      return userLogged
-    }
-    const userLogged = getInitialUserLogged()
+    const userLogged = JSON.parse(localStorage.getItem("userLogged")) || false
     userLogged ? setUser(true) : setUser(false)
   }, [])
+  
+
 
 
   return (
     <>
       <NavBar />
-      {/*<main>*/}
+
       <Outlet />
-      {/*</main>*/}
+
       <Footer />
     </>
   )

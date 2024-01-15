@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const Page404 = () => {
   return (
     <main className='main-page404'>

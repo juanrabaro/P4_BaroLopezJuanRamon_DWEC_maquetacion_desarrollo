@@ -4,9 +4,9 @@ import { UserContext } from '../context/userContext'
 
 const LayoutPrivate = () => {
 
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
   const navigate = useNavigate()
-
 
 
   useEffect(() => {
@@ -14,6 +14,7 @@ const LayoutPrivate = () => {
   }, [user])
 
 
+  
   return (
     <Outlet />
   )

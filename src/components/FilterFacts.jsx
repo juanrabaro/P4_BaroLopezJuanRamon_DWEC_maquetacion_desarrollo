@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 
 const FilterFacts = ({ setFilteredList, filter, setFilter, factsList }) => {
@@ -14,10 +15,12 @@ const FilterFacts = ({ setFilteredList, filter, setFilter, factsList }) => {
   }, [filter])
 
 
+
   // change the filter if the input filter data is changed 
   function handleFilter(e) {
     setFilter(e.target.value)
   }
+
 
 
   return (

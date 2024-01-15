@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 const RegisterPage = () => {
 
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
   const navigate = useNavigate()
   
@@ -15,6 +16,7 @@ const RegisterPage = () => {
     }
   }, [])
   
+
   
   return (
     <main className='main-register'>

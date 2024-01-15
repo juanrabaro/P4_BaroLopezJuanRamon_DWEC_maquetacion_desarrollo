@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
 
 const FilterBreeds = ({ filter, setFilter, breeds, breedsList, setPagCount, setFilteredList }) => {
@@ -8,6 +9,7 @@ const FilterBreeds = ({ filter, setFilter, breeds, breedsList, setPagCount, setF
   var posiblyOriginList = []
   var posiblyCoatList = []
   var posiblyPatternList = []
+  
   // All the posibilities of all the atributes
   breeds.forEach((breedObject) => {
     if (!posiblyBreedList.includes(breedObject.breed) && breedObject.breed !== ""){
@@ -26,6 +28,7 @@ const FilterBreeds = ({ filter, setFilter, breeds, breedsList, setPagCount, setF
       posiblyPatternList.push(breedObject.pattern)
     }
   })
+
   // Sort alphabetically the lists
   posiblyBreedList = posiblyBreedList.sort()
   posiblyCountryList = posiblyCountryList.sort()
@@ -70,6 +73,9 @@ const FilterBreeds = ({ filter, setFilter, breeds, breedsList, setPagCount, setF
     setPagCount(1)
   }, [filter])
 
+
+
+  
 
   return (
     <section className='main-wiki-breed__filters'>

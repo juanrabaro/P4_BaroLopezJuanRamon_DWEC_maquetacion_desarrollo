@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react'
 
 const PaginationCount = ({ filter, filteredListLength, pagCount, setPagCount, currentPage, setCurrentPage }) => {
@@ -8,15 +9,16 @@ const PaginationCount = ({ filter, filteredListLength, pagCount, setPagCount, cu
   }, [filter])
 
 
+
   // control the state pageCount
   function prevPag() {
-    var currentPageState = --pagCount
-    pagCount > 0 && (setCurrentPage(currentPageState), setPagCount(currentPageState), document.documentElement.scrollTop = 0)
+    pagCount > 1 && (setCurrentPage(pagCount-1), setPagCount(pagCount-1), document.documentElement.scrollTop = 0)
   }
   function nextPag() {
-    var currentPageState = ++pagCount
-    pagCount < Math.ceil(filteredListLength/20) && (setCurrentPage(currentPageState), setPagCount(currentPageState), document.documentElement.scrollTop = 0)
+    pagCount < Math.ceil(filteredListLength/20) && (setCurrentPage(pagCount+1), setPagCount(pagCount+1), document.documentElement.scrollTop = 0)
   }
+  
+
   
 
   return (

@@ -7,6 +7,7 @@ const Fact = () => {
   const location = useLocation()
   const prevPage = location.state
   
+
   return (
     <main className='main-fact'>
       <section className='main-fact__container'>

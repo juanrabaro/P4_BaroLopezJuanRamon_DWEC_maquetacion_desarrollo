@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { UserContext } from '../context/userContext'
 import RandomFact from '../components/RandomFact'
 import SigninForm from '../components/SigninForm'
@@ -6,7 +6,7 @@ import RegisterForm from '../components/RegisterForm'
 
 const Home = () => {
 
-  // user logged?
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
 
 

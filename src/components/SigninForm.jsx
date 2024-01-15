@@ -1,34 +1,29 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
+import { allUsersData } from '../localStorage/localStorage'
 
 const SigninForm = () => {
   
-  // user dirá si está logeado
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
-  // lista de usuarios registrados
-  const [listUsers, setListUsers] = useState([])
-  // para el contador cuando no es correcta la información
+
+  // list of all users saved in localStorage
+  const [listUsers, setListUsers] = useState(allUsersData())
+
   const hideMessage = useRef(null)
-  // mensaje cuando no es correcta la información
   const [message, setMessage] = useState("")
-  // controlar si los datos del formulario están correctos o no
   const [incorrectForm, setIncorrectForm] = useState(false)
   const navigate = useNavigate()
-  // if the form has some information enable the sign in button
   const [validData, setValidData] = useState(false)
 
-
-  useEffect(() => {
-    setListUsers(JSON.parse(localStorage.getItem("usersData")) || [])
-  }, [])
-
-
-  // estado de los datos del usuario en tiempo real
+  // form data
   const [formUser, setFormUser] = useState({
     email: "",
     pwd: ""
   })
+
+
 
 
   function handleChange(e) {
@@ -40,20 +35,21 @@ const SigninForm = () => {
   }
 
 
+
+
   useEffect(() => {
     (formUser.email && formUser.pwd) ? setValidData(true) : setValidData(false)
   }, [formUser])
   
 
 
+
   function signIn(e) {
     e.preventDefault()
-    
     const userExist = listUsers.filter((userObj) => {
       return userObj.email === formUser.email
     })
 
-    console.log(userExist)
     if ( userExist.length ) {
       if ( userExist[0].pwd === formUser.pwd ) {
         localStorage.setItem("userLogged", true)
@@ -83,6 +79,9 @@ const SigninForm = () => {
       }, 2000)
     }
   }
+
+
+
 
   
   return (

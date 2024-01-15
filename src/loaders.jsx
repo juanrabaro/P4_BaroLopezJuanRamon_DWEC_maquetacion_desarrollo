@@ -1,4 +1,5 @@
 // load API data for all the breeds
+// return all breeds
 export const loaderBreeds = async() => {
   const res = await fetch("https://catfact.ninja/breeds?limit=98")
   const breeds = await res.json()
@@ -12,7 +13,11 @@ export const loaderBreeds = async() => {
 
   return { breeds: modifiedBreeds }
 }
+
+
+
 // load API data for one specific breed(dynamic)
+// return the specific breed
 export async function loaderBreed({ params }) {
   const res = await fetch(`https://catfact.ninja/breeds?limit=${params.id}`)
   const data = await res.json()
@@ -21,7 +26,9 @@ export async function loaderBreed({ params }) {
 }
 
 
+
 // load API data for all the facts
+// return all facts
 export const loaderFacts = async() => {
   const res = await fetch("https://catfact.ninja/facts?limit=332")
   const facts = await res.json()
@@ -37,7 +44,11 @@ export const loaderFacts = async() => {
 
   return { facts: modifiedFacts }
 }
+
+
+
 // load API data for one specific fact(dynamic)
+// return the specific fact
 export async function loaderFact({ params }) {
   const res = await fetch(`https://catfact.ninja/facts?limit=${params.id}`)
   const data = await res.json()

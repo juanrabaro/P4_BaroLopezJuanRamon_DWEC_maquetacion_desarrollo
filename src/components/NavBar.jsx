@@ -5,8 +5,10 @@ import LogoutButton from './LogoutButton'
 
 const NavBar = () => {
 
+  // user is logged?
   const { user, setUser } = useContext(UserContext)
 
+  
   return (
     <header>
       <img src="/public/img/logo.png" alt="logo image" />
