@@ -11,7 +11,7 @@ const NavBar = () => {
   
   return (
     <header>
-      <img src="/public/img/logo.png" alt="logo image" />
+      <img src="/logo.png" alt="logo image" />
       <nav>
         <Link to="/">Home</Link>
         <Link to="/facts">Wiki Facts</Link>
