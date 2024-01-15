@@ -1,0 +1,20 @@
+body {
+  background-color: $backgroundColor;
+  
+  .main-page404 {
+    @include flex(column, center, center);
+    width: 100%;
+    margin-top: 180px;
+
+    h1 {
+      color: rgb(232, 135, 227);
+      font-size: 55px;
+      margin-bottom: 0;
+    }
+    h2 {
+      color: rgb(239, 185, 236);
+      font-size: 40px;
+
+    }
+  }
+}

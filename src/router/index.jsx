@@ -15,6 +15,7 @@ import SignInPage from "../pages/SignInPage"
 import LayoutPrivate from "../layouts/LayoutPrivate"
 import LayoutRoot from "../layouts/LayoutRoot"
 import ContactPage from "../pages/ContactPage"
+import Page404 from "../pages/Page404"
 
 export const router = createBrowserRouter([
   {
@@ -72,5 +73,6 @@ export const router = createBrowserRouter([
         ]
       },
     ],
+    errorElement: <Page404 />,
   },
 ])
