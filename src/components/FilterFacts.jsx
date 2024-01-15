@@ -25,7 +25,7 @@ const FilterFacts = ({ setFilteredList, filter, setFilter, factsList }) => {
 
   return (
     <>
-      <input className='main-wiki-facts__filter-container__input' type="text" onChange={ handleFilter } placeholder='Find by keywords' />
+      <input className='main-wiki-facts__filter-container__input' type="text" value={ filter } onChange={ handleFilter } placeholder='Find by keywords' />
       {
         filteredListLength === 0 && <p className='main-wiki-facts__filter-container__message' >There is no result for your specifications</p>
       }

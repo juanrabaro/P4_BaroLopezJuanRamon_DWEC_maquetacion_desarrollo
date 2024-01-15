@@ -2,7 +2,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const FactCard = ({ item, listFavs, user, currentPage, deleteFavourite, addFavourite }) => {
+const FactCard = ({ item, listFavs, user, currentPage, deleteFavourite, addFavourite, filter }) => {
   return (
     <div className='container' key={ item.id }>
       <p id={ item.id }>
@@ -15,7 +15,7 @@ const FactCard = ({ item, listFavs, user, currentPage, deleteFavourite, addFavou
           :
           <button className='add-button' onClick={ () => addFavourite(item.id) }>Add favourites⭐</button>
         }
-        <Link className='view' to={`/facts/${ item.id+1 }`} state={ currentPage } >View Fact</Link>
+        <Link className='view' to={`/facts/${ item.id+1 }`} state={{ currentPage: currentPage, filter: filter }} >View Fact</Link>
       </div>
     </div>
   )

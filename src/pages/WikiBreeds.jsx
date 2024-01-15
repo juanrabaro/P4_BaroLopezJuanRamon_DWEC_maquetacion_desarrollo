@@ -23,9 +23,6 @@ const WikiBreeds = () => {
   const [showButton, setShowButton] = useState(false)
   const showPos = 400
 
-  // email user logged
-  const [emailUserLogger, setEmailUserLogger] = useState(localStorage.getItem("userLoggedEmail")) || ""
-  
   var [pagCount, setPagCount] = useState(1)
   var [currentPage, setCurrentPage] = useState(1)
   const location = useLocation()
@@ -56,7 +53,9 @@ const WikiBreeds = () => {
     }
     window.addEventListener('scroll', handleScroll)
 
-    location.state >= 1 && (setPagCount(location.state), setCurrentPage(location.state))
+    if (location.state) {
+      location.state >= 1 && (setPagCount(location.state), setCurrentPage(location.state))
+    }
   }, [])
 
 
@@ -146,7 +145,7 @@ const WikiBreeds = () => {
 
       <section className='main-wiki-breeds__section-breeds'>
         {
-          !filteredList.length ? <p>There is no result for your specifications</p> :
+          !filteredList.length ? <p className='no-result'>There is no result for your specifications</p> :
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
             return <BreedCard key={index} item={ item } listFavs={ listFavs } user={ user } currentPage={ currentPage } deleteFavourite={ deleteFavourite } addFavourite={ addFavourite } />
           })

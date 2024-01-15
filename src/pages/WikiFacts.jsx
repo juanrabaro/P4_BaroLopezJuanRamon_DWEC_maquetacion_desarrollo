@@ -46,7 +46,11 @@ const WikiFacts = () => {
     }
     window.addEventListener('scroll', handleScroll)
 
-    location.state >= 1 && (setPagCount(location.state), setCurrentPage(location.state))
+    if (location.state) {
+      console.log(location.state.prevPage)
+      console.log(location.state.prevFilter)
+      location.state.prevPage >= 1 && (setPagCount(location.state.prevPage), setCurrentPage(location.state.prevPage), setFilter(location.state.prevFilter))
+    }
   }, [])
   
 
@@ -137,7 +141,7 @@ const WikiFacts = () => {
       <section className='main-wiki-facts__section-facts'>
         {
           filteredList?.slice((pagCount-1)*20, ((pagCount-1)*20)+20).map((item, index) => {
-            return <FactCard key={index} item={ item } listFavs={ listFavs } user={ user } currentPage={ currentPage } deleteFavourite={ deleteFavourite } addFavourite={ addFavourite }/>
+            return <FactCard key={index} item={ item } listFavs={ listFavs } user={ user } currentPage={ currentPage } deleteFavourite={ deleteFavourite } addFavourite={ addFavourite } filter={ filter } />
           })
         }
       </section>

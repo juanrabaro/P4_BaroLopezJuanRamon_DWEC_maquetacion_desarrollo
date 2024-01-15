@@ -69,6 +69,11 @@
     column-gap: 4%;
     padding: 20px 10% 30px 10%;
 
+    .no-result {
+      text-align: center;
+      color: #eec5f0;
+    }
+
     &__container {
       @include flex(column, center, space-between);
       text-align: center;
